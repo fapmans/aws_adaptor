@@ -1,0 +1,13 @@
+{ 
+   "format": "aws",
+   "policy": {
+       "Statement": [
+        { 
+          "Effect": "Allow",
+          "NotAction": ["ec2:*", "s3:*"],
+          "Resource": "arn:aws:ec2:us-east-1:123456789023:instance/i-1a2b3c4d",
+          "Condition": {"DateGreaterThan" : {"aws:CurrentTime": "2013-12-15T12:00:00Z"} }
+        }
+     ]
+   }
+}

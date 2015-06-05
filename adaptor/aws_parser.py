@@ -25,7 +25,7 @@ def parse_action(value, conds, rule, not_cond = False):
     if not_cond:
         nt = "!"
 
-    if conds != []:
+    if rule != "":
         rule = rule + " & " + nt + "("
     else:
         rule = nt + "("
@@ -61,7 +61,7 @@ def parse_resource(value, conds, rule, not_cond = False):
     if not_cond:
         nt = "!"
 
-    if conds != []:
+    if rule != "":
         rule = rule + " & " + nt + "("
     else:
         rule = nt + "("
@@ -96,42 +96,35 @@ def parse_principal(value, conds, rule, not_cond = False):
 
 def parse_condition(value, conds, rule):
 
-    if conds != []:
-        rule = rule + " & " + "("
-    else:
-        rule = "("
-
     for op, v in value.items():
-        for att, val in v:
+        for att, val in v.items():
+            if rule != "":
+                rule = rule + " & " + "("
+            else:
+                rule = "("
             if type(val) is list:
-                pass
+                i = 0
+                for vl in val:
+                    t = "c"
+                    if "*" in vl:
+                        t = "v"  # This is not a variable, but a wildcard
+                    c = { "attr": att, "op": op, "value": vl, "type": t }
+                    if c not in conds:
+                        conds.append(c)
+                    if i > 0:
+                        rule = rule + " | "
+                    rule = rule + "c" + str(conds.index(c))
+                    i = i + 1
             else:
                 t = "c"
                 if "*" in val:
                     t = "v"  # This is not a variable, but a wildcard
         
-                c = { "attr": "Resource", "op": "=", "value": value, "type": t }
+                c = { "attr": att, "op": op, "value": val, "type": t }
                 if c not in conds:
                     conds.append(c)
                 rule = rule + "c" + str(conds.index(c))
-                
-
-    if type(value) is list:
-        i = 0
-        for v in value:
-            t = "c"
-            if "*" in v:
-                t = "v"  # This is not a variable, but a wildcard
-            c = { "attr": "Resource", "op": "=", "value": v, "type": t }
-            if c not in conds:
-                conds.append(c)
-            if i > 0:
-                rule = rule + " | "
-            rule = rule + "c" + str(conds.index(c))
-            i = i + 1
-    else:
-
-    rule = rule + ")"
+            rule = rule + ")"
 
     return rule, conds
 
