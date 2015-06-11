@@ -21,9 +21,13 @@ def oposite_operator(operator):
         return "not "+operator
 
 def value_type(value):
-    t = "c"
-    if "*" in value or "?" in value or (value.find("${") == 0 and value.rfind("}") == len(value) - 1) :
-        t = "v"  # This is not a variable, but a wildcard
+    if "*" in value or "?" in value:
+        t = "w" 
+    elif value.find("${") == 0 and value.rfind("}") == len(value) - 1 :
+        t = "v"
+    else:
+        t = "c"
+
     return t
 
 
