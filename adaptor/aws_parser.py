@@ -20,6 +20,13 @@ def oposite_operator(operator):
     else:
         return "not "+operator
 
+def value_type(value):
+    t = "c"
+    if "*" in value or "?" in value or (value.find("${") == 0 and value.rfind("}") == len(value) - 1) :
+        t = "v"  # This is not a variable, but a wildcard
+    return t
+
+
 def parse_action(value, conds, rule, not_cond = False):
     nt = ""
     if not_cond:
@@ -41,10 +48,7 @@ def parse_action(value, conds, rule, not_cond = False):
                 service = v[:idx]
                 action = v[idx+1:]
 
-                t = "c"
-                if "*" in service or "?" in service or (service.find("${") == 0 and service.rfind("}") == len(service) - 1) :
-                    t = "v"  # This is not a variable, but a wildcard
-                c = { "attribute": "action_service", "operator": "=", "value": service, "type": t }
+                c = { "attribute": "action_service", "operator": "=", "value": service, "type": value_type(service) }
 
                 if c not in conds:
                     conds.append(c)
@@ -53,10 +57,7 @@ def parse_action(value, conds, rule, not_cond = False):
             else:
                 action = v
 
-            t = "c"
-            if "*" in action or "?" in action or (action.find("${") == 0 and action.rfind("}") == len(action) - 1) :
-                t = "v"  # This is not a variable, but a wildcard
-            c = { "attribute": "action", "operator": "=", "value": action, "type": t }
+            c = { "attribute": "action", "operator": "=", "value": action, "type": value_type(action) }
 
             if c not in conds:
                 conds.append(c)
@@ -72,10 +73,7 @@ def parse_action(value, conds, rule, not_cond = False):
             service = value[:idx]
             action = value[idx+1:]
 
-            t = "c"
-            if "*" in service or "?" in service or (service.find("${") == 0 and service.rfind("}") == len(service) - 1) :
-                t = "v"  # This is not a variable, but a wildcard
-            c = { "attribute": "action_service", "operator": "=", "value": service, "type": t }
+            c = { "attribute": "action_service", "operator": "=", "value": service, "type": value_type(service) }
 
             if c not in conds:
                 conds.append(c)
@@ -84,10 +82,7 @@ def parse_action(value, conds, rule, not_cond = False):
         else:
             action = value
 
-        t = "c"
-        if "*" in action or "?" in action or (action.find("${") == 0 and action.rfind("}") == len(action) - 1) :
-            t = "v"  # This is not a variable, but a wildcard
-        c = { "attribute": "action", "operator": "=", "value": action, "type": t }
+        c = { "attribute": "action", "operator": "=", "value": action, "type": value_type(action) }
 
         if c not in conds:
             conds.append(c)
@@ -158,11 +153,7 @@ def parse_resource(value, conds, rule, not_cond = False):
 
                 j = 0
                 for att, val in values.items():
-                    t = "c"
-                    if "*" in val or "?" in val or (val.find("${") == 0 and val.rfind("}") == len(val) - 1) :
-                        t = "v"  # This is not a variable, but a wildcard
-
-                    c = { "attribute": att, "operator": "=", "value": val, "type": t }
+                    c = { "attribute": att, "operator": "=", "value": val, "type": value_type(val) }
 
                     if c not in conds:
                         conds.append(c)
@@ -173,11 +164,7 @@ def parse_resource(value, conds, rule, not_cond = False):
                     j += 1
 
             else:
-                t = "c"
-                if "*" in v or "?" in v or (v.find("${") == 0 and v.rfind("}") == len(v) - 1) :
-                    t = "v"  # This is not a variable, but a wildcard
-
-                c = { "attribute": "resource", "operator": "=", "value": v, "type": t }
+                c = { "attribute": "resource", "operator": "=", "value": v, "type": value_type(v) }
 
                 if c not in conds:
                     conds.append(c)
@@ -193,11 +180,7 @@ def parse_resource(value, conds, rule, not_cond = False):
 
             j = 0
             for att, val in values.items():
-                t = "c"
-                if "*" in val or "?" in val or (val.find("${") == 0 and val.rfind("}") == len(val) - 1) :
-                    t = "v"  # This is not a variable, but a wildcard
-
-                c = { "attribute": att, "operator": "=", "value": val, "type": t }
+                c = { "attribute": att, "operator": "=", "value": val, "type": value_type(val) }
 
                 if c not in conds:
                     conds.append(c)
@@ -207,11 +190,7 @@ def parse_resource(value, conds, rule, not_cond = False):
                 rule = rule + "c" + str(conds.index(c))
                 j += 1
         else:
-            t = "c"
-            if "*" in value or "?" in value or (value.find("${") == 0 and value.rfind("}") == len(value) - 1) :
-                t = "v"  # This is not a variable, but a wildcard
-
-            c = { "attribute": "resource", "operator": "=", "value": value, "type": t }
+            c = { "attribute": "resource", "operator": "=", "value": value, "type": value_type(value) }
 
             if c not in conds:
                 conds.append(c)
@@ -236,10 +215,7 @@ def parse_principal(value, conds, rule, not_cond = False):
     if type(value) is list:
         i = 0
         for v in value:
-            t = "c"
-            if "*" in v:
-                t = "v"  # This is not a variable, but a wildcard
-            c = { "attribute": "Principal", "operator": "=", "value": v, "type": t }
+            c = { "attribute": "Principal", "operator": "=", "value": v, "type": value_type(v) }
             if c not in conds:
                 conds.append(c)
             if i > 0:
@@ -247,10 +223,7 @@ def parse_principal(value, conds, rule, not_cond = False):
             rule = rule + "c" + str(conds.index(c))
             i = i + 1
     else:
-        t = "c"
-        if "*" in value:
-            t = "v"  # This is not a variable, but a wildcard
-        c = { "attribute": "Principal", "operator": "=", "value": value, "type": t }
+        c = { "attribute": "Principal", "operator": "=", "value": value, "type": value_type(value) }
         if c not in conds:
             conds.append(c)
         rule = rule + "c" + str(conds.index(c))
@@ -269,10 +242,7 @@ def parse_condition(value, conds, rule):
             if type(val) is list:
                 i = 0
                 for vl in val:
-                    t = "c"
-                    if "*" in vl:
-                        t = "v"  # This is not a variable, but a wildcard
-                    c = { "attribute": att, "operator": op, "value": vl, "type": t }
+                    c = { "attribute": att, "operator": op, "value": vl, "type": value_type(vl) }
                     if c not in conds:
                         conds.append(c)
                     if i > 0:
@@ -280,11 +250,7 @@ def parse_condition(value, conds, rule):
                     rule = rule + "c" + str(conds.index(c))
                     i = i + 1
             else:
-                t = "c"
-                if "*" in val:
-                    t = "v"  # This is not a variable, but a wildcard
-        
-                c = { "attribute": att, "operator": op, "value": val, "type": t }
+                c = { "attribute": att, "operator": op, "value": val, "type": value_type(val) }
                 if c not in conds:
                     conds.append(c)
                 rule = rule + "c" + str(conds.index(c))
@@ -361,9 +327,9 @@ def parse(policy):
         elif st['Effect'] == "Deny":
             deny_rules.append(rule)
 
-    print (conds)
-    print (allow_rules)
-    print (deny_rules)
+    #print (conds)
+    #print (allow_rules)
+    #print (deny_rules)
 
     # Finally, allow_rules and deny_rules are combined: Allow_rules AND NOT (Deny_rules)
     # The result is a string in terms of conditions (C1, C2, ...) to be transformed into DNF
@@ -457,13 +423,12 @@ def policy2dnf(policy):
             if (c != "") and c is not None:
                 c = int(float(c))
                 cd = copy.copy(conds[c])
+
                 if not_cond:
                     cd['operator'] = oposite_operator(cd['operator'])
-                if cd['value'].find("%(") == 0 and cd['value'].rfind(")s") == len(cd['value']) - 2:
-                    cd['type'] = "v"
-                else:
-                    cd['type'] = "c"
+
                 cd['description'] = cd['attribute']+cd['operator']+cd['value']
+
                 conditions.append(cd)
         # Insert the AND Rule
         data = {
