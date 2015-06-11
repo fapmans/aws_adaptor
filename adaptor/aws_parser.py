@@ -117,9 +117,11 @@ def parse_arn(value, type):
             else:
                 resp[type+'_type'] = v[:idx2]
                 resp[type] = v[idx2+1:]
+                resp[type+'_connector'] = "/"
         else:
             resp[type+'_type'] = v[:idx]
             resp[type] = v[idx+1:]
+            resp[type+'_connector'] = ":"
                 
     return resp
 
@@ -468,44 +470,219 @@ def policy2dnf(policy):
     dnf_policy['and_rules'] = and_rules
     return dnf_policy
 
+def combine(conditions, type):
+    resp = {}
+
+    # Positive rules
+    if type == 'Principal':
+
+        principal = {}
+
+        for cond in conditions:
+            if cond['attribute'] == 'principal_type':
+                principal['type'] = cond['value']
+            elif cond['attribute'] == 'principal_partition':
+                principal['partition'] = cond['value']
+            elif cond['attribute'] == 'principal_service':
+                principal['service'] = cond['value']
+            elif cond['attribute'] == 'principal_region':
+                principal['region'] = cond['value']
+            elif cond['attribute'] == 'principal_account':
+                principal['account'] = cond['value']
+            elif cond['attribute'] == 'principal':
+                principal['value'] = cond['value']
+            else:
+                print(cond)
+
+        principal_item = {}
+
+        if 'type' in principal:
+            principal_item[principal['type']] = []
+            if 'partition' in principal or \
+                'service' in principal or \
+                'region' in principal or \
+                'account' in principal:
+                arn = "arn:"
+                if 'partition' in principal:
+                    arn = arn + principal['partition'] + ":"
+                else:
+                    arn = arn + ":"
+                if 'service' in principal:
+                    arn = arn + principal['service'] + ":"
+                else:
+                    arn = arn + ":"
+                if 'region' in principal:
+                    arn = arn + principal['region'] + ":"
+                else:
+                    arn = arn + ":"
+                if 'account' in principal:
+                    arn = arn + principal['account'] + ":"
+                else:
+                    arn = arn + ":"
+
+                arn = arn + principal['value']
+
+            else: # "AWS": "{not_arn}"
+                arn = principal['value']
+
+            principal_item[principal['type']].append(arn)
+                
+        else: # *
+            arn = principal['value']
+            principal_item = arn
+
+        resp = principal_item
+
+    elif type == 'Resource':
+
+        resource = {}
+
+        for cond in conditions:
+            if cond['attribute'] == 'resource_partition':
+                resource['partition'] = cond['value']
+            elif cond['attribute'] == 'resource_service':
+                resource['service'] = cond['value']
+            elif cond['attribute'] == 'resource_region':
+                resource['region'] = cond['value']
+            elif cond['attribute'] == 'resource_account':
+                resource['account'] = cond['value']
+            elif cond['attribute'] == 'resource_type':
+                resource['type'] = cond['value']
+            elif cond['attribute'] == 'resource_connector':
+                resource['connector'] = cond['value']
+            elif cond['attribute'] == 'resource':
+                resource['value'] = cond['value']
+            else:
+                print(cond)
+
+        resource_item = {}
+
+        if 'partition' in resource or \
+            'service' in resource or \
+            'region' in resource or \
+            'account' in resource:
+            arn = "arn:"
+            if 'partition' in resource:
+                arn = arn + resource['partition'] + ":"
+            else:
+                arn = arn + ":"
+            if 'service' in resource:
+                arn = arn + resource['service'] + ":"
+            else:
+                arn = arn + ":"
+            if 'region' in resource:
+                arn = arn + resource['region'] + ":"
+            else:
+                arn = arn + ":"
+            if 'account' in resource:
+                arn = arn + resource['account'] + ":"
+            else:
+                arn = arn + ":"
+            if 'type' in resource:
+                arn = arn + resource['type']
+            if 'connector' in resource:
+                arn = arn + resource['connector']
+
+            arn = arn + resource['value']
+            resource_item = arn
+
+        else:
+            resource_item = resource['value']
+                
+        resp = resource_item
+
+    elif type == 'Action':
+        action = {}
+
+        for cond in conditions:
+            if cond['attribute'] == 'action_service':
+                action['service'] = cond['value']
+            elif cond['attribute'] == 'action':
+                action['value'] = cond['value']
+
+        action_item = ""
+        if 'service' in action:
+            action_item = action_item + action['service'] + ":"
+        action_item = action_item + action['value']
+
+        resp = action_item
+
+    elif type == 'Condition':
+        pass
+
+    elif type in ['NotPrincipal', 'NotAction', 'NotResource']:
+        pass
+        # Not rule
+
+    else: 
+        # Condition
+        pass
+
+    return resp
+
 def policy2local(dnf_policy):
+
     policy = {}
+
+    policy['Statement'] = []
+
     if 'and_rules' in dnf_policy: # If there is no and_rules, just return an empty policy
         for and_rule in dnf_policy['and_rules']: # For each and_rule
             enabled = True
             if 'enabled' in and_rule:
                 enabled = and_rule['enabled']
             if enabled:  # If it is enabled
-                service = ""
-                action  = ""
-                condition = ""
+                statement = {}
                 for cond in and_rule['conditions']:    # Check all Conditions
-                    not_cond = ""
-                    if 'operator' in cond:
-                        if cond['operator'] == "!=":
-                            not_cond = "not "
                     if 'attribute' in cond:
-                        if cond['attribute'] == "service":    # Retrieve the Service
-                            service = cond['value']
-                        elif cond['attribute'] == "action":   # Retrieve the Action
-                            action = cond['value']
-                        else:                              # Retrieve the other Conditions (combining with "and"s)
-                            if condition == "":
-                                condition = not_cond + cond['attribute'] + ":" + cond['value']
+                        if cond['attribute'].find("principal") == 0:    # Retrieve the Principal attributes
+                            if cond['operator'] == "=":
+                                if not 'Principal' in statement:
+                                    statement['Principal'] = []
+                                statement['Principal'].append(cond)
                             else:
-                                condition = condition + " and " + not_cond + cond['attribute'] + ":" + cond['value']
+                                if not 'NotPrincipal' in statement:
+                                    statement['NotPrincipal'] = []
+                                statement['NotPrincipal'].append(cond)
+
+                        elif cond['attribute'].find("action") == 0:   # Retrieve the Action attributes
+                            if cond['operator'] == "=":
+                                if not 'Action' in statement:
+                                    statement['Action'] = []
+                                statement['Action'].append(cond)
+                            else:
+                                if not 'NotAction' in statement:
+                                    statement['NotAction'] = []
+                                statement['NotAction'].append(cond)
+
+                        elif cond['attribute'].find("resource") == 0:   # Retrieve the Resource attributes
+                            if cond['operator'] == "=":
+                                if not 'Resource' in statement:
+                                    statement['Resource'] = []
+                                statement['Resource'].append(cond)
+                            else:
+                                if not 'NotResource' in statement:
+                                    statement['NotResource'] = []
+                                statement['NotResource'].append(cond)
+                        else:                              # Retrieve the other Conditions (combining with "and"s)
+                            if not 'Condition' in statement:
+                                statement['Condition'] = []
+                            statement['Condition'].append(cond)
+
                     else:
                         print(cond)
 
                 # Insert the and_rule in the policy
-                if service+":"+action in policy:           # Set the policy entry. If already exists, combine with "or"s
-                    if condition.find("and") == -1:
-                        policy[service+":"+action] = policy[service+":"+action] + " or " + condition
-                    else:
-                        policy[service+":"+action] = policy[service+":"+action] + " or (" + condition + ")"
-                else:
-                    if condition.find("and") == -1:        # Includes the case: condition == ""
-                        policy[service+":"+action] = condition
-                    else:
-                        policy[service+":"+action] = "(" + condition + ")"
+                policy['Statement'].append(statement)
+
+    for statement in policy['Statement']:
+#        print (policy['Statement'].index(statement))
+        for attr, conds in statement.items():
+             statement[attr] = combine(conds, attr)
+        statement['Effect'] = 'Allow'
+
+    print ("=======================")
+    print (policy)
+    print ("=======================")
+
     return policy

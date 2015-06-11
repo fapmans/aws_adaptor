@@ -1,0 +1,174 @@
+{
+    "format" : "aws",
+    "dnf_policy": {
+        "and_rules": [
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_type",
+                        "description": "principal_type=AWS",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "AWS"
+                    },
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=12345678012",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "12345678012"
+                    },
+                    {
+                        "attribute": "principal",
+                        "description": "principal=root",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "root"
+                    },
+                    {
+                        "attribute": "principal_partition",
+                        "description": "principal_partition=aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "aws"
+                    },
+                    {
+                        "attribute": "principal_service",
+                        "description": "principal_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=s3",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "s3"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "*"
+                    },
+                    {
+                        "attribute": "resource_partition",
+                        "description": "resource_partition=aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "aws"
+                    },
+                    {
+                        "attribute": "resource",
+                        "description": "resource=mybucket",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "mybucket"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=s3",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "s3"
+                    }
+                ],
+                "description": "(c0,c1,c2,c3,c4,c5,c6,c7,c8,c9)0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_type",
+                        "description": "principal_type=AWS",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "AWS"
+                    },
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=12345678012",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "12345678012"
+                    },
+                    {
+                        "attribute": "principal",
+                        "description": "principal=root",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "root"
+                    },
+                    {
+                        "attribute": "principal_partition",
+                        "description": "principal_partition=aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "aws"
+                    },
+                    {
+                        "attribute": "principal_service",
+                        "description": "principal_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=s3",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "s3"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "*"
+                    },
+                    {
+                        "attribute": "resource_partition",
+                        "description": "resource_partition=aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "aws"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=s3",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "s3"
+                    },
+                    {
+                        "attribute": "resource_connector",
+                        "description": "resource_connector=/",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "/"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=mybucket",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "mybucket"
+                    },
+                    {
+                        "attribute": "resource",
+                        "description": "resource=*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "*"
+                    }
+                ],
+                "description": "(c0,c1,c2,c3,c4,c5,c6,c7,c9,c10,c11,c12)1",
+                "enabled": true
+            }
+        ]
+    }
+}
+
