@@ -608,11 +608,51 @@ def combine(conditions, type):
         resp = action_item
 
     elif type == 'Condition':
+        condition = {}
+
+        for cond in conditions:
+            op = cond['operator']
+            attr = cond['attribute']
+            value = cond['value']
+            if op in condition:
+                if attr in condition[op]:
+                    condition[op][attr].append(value)
+                else:
+                    condition[op][attr] = []
+                    condition[op][attr].append(value)
+            else:
+                condition[op] = {}
+                condition[op][attr] = []
+                condition[op][attr].append(value)
+                        
+        resp = condition
+
+    # Not rule
+    elif type == 'NotPrincipal':
         pass
 
-    elif type in ['NotPrincipal', 'NotAction', 'NotResource']:
+    elif type == 'NotAction':
         pass
-        # Not rule
+
+        ''' print(conditions)
+        action = {}
+
+        for cond in conditions:
+            if cond['attribute'] == 'action_service':
+                action['service'] = cond['value']
+            elif cond['attribute'] == 'action':
+                action['value'] = cond['value']
+
+        action_item = ""
+        if 'service' in action:
+            action_item = action_item + action['service'] + ":"
+        action_item = action_item + action['value']
+
+        resp = action_item'''
+
+
+    elif type == 'NotResource':
+        pass
 
     else: 
         # Condition
@@ -676,13 +716,8 @@ def policy2local(dnf_policy):
                 policy['Statement'].append(statement)
 
     for statement in policy['Statement']:
-#        print (policy['Statement'].index(statement))
         for attr, conds in statement.items():
              statement[attr] = combine(conds, attr)
         statement['Effect'] = 'Allow'
-
-    print ("=======================")
-    print (policy)
-    print ("=======================")
 
     return policy
