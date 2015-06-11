@@ -26,33 +26,76 @@ def parse_action(value, conds, rule, not_cond = False):
         nt = "~"
 
     if rule != "":
-        rule = rule + " & " + nt + "("
+        rule = rule + " & " + nt + "("  # Open ACTION
     else:
-        rule = nt + "("
+        rule = nt + "("                 # Open ACTION
 
     if type(value) is list:
         i = 0
         for v in value:
-            t = "c"
-            if "*" in v or "?" in v or (v.find("${") == 0 and v.rfind("}") == len(v) - 1) :
-                t = "v"  # This is not a variable, but a wildcard
-            c = { "attribute": "Action", "operator": "=", "value": v, "type": t }
-            if c not in conds:
-                conds.append(c)
             if i > 0:
                 rule = rule + " | "
+
+            idx = v.find(":")
+            if idx > 0:
+                service = v[:idx]
+                action = v[idx+1:]
+
+                t = "c"
+                if "*" in service or "?" in service or (service.find("${") == 0 and service.rfind("}") == len(service) - 1) :
+                    t = "v"  # This is not a variable, but a wildcard
+                c = { "attribute": "action_service", "operator": "=", "value": service, "type": t }
+
+                if c not in conds:
+                    conds.append(c)
+                rule = rule + "(c" + str(conds.index(c)) + " & " # Open ACTION_SERVICE + ACTION
+
+            else:
+                action = v
+
+            t = "c"
+            if "*" in action or "?" in action or (action.find("${") == 0 and action.rfind("}") == len(action) - 1) :
+                t = "v"  # This is not a variable, but a wildcard
+            c = { "attribute": "action", "operator": "=", "value": action, "type": t }
+
+            if c not in conds:
+                conds.append(c)
             rule = rule + "c" + str(conds.index(c))
+            if idx > 0:
+                rule = rule + ")" # Closes ACTION_SERVICE + ACTION
+
             i = i + 1
+
     else:
+        idx = value.find(":")
+        if idx > 0:
+            service = value[:idx]
+            action = value[idx+1:]
+
+            t = "c"
+            if "*" in service or "?" in service or (service.find("${") == 0 and service.rfind("}") == len(service) - 1) :
+                t = "v"  # This is not a variable, but a wildcard
+            c = { "attribute": "action_service", "operator": "=", "value": service, "type": t }
+
+            if c not in conds:
+                conds.append(c)
+            rule = rule + "(c" + str(conds.index(c)) + " & " # Open ACTION_SERVICE + ACTION
+
+        else:
+            action = value
+
         t = "c"
-        if "*" in value or "?" in value or (value.find("${") == 0 and value.rfind("}") == len(value) - 1) :
+        if "*" in action or "?" in action or (action.find("${") == 0 and action.rfind("}") == len(action) - 1) :
             t = "v"  # This is not a variable, but a wildcard
-        c = { "attribute": "Action", "operator": "=", "value": value, "type": t }
+        c = { "attribute": "action", "operator": "=", "value": action, "type": t }
+
         if c not in conds:
             conds.append(c)
         rule = rule + "c" + str(conds.index(c))
+        if idx > 0:
+            rule = rule + ")" # Closes ACTION_SERVICE + ACTION
 
-    rule = rule + ")"
+    rule = rule + ")" # Closes ACTION
 
     return rule, conds
 
@@ -67,7 +110,7 @@ def parse_arn(value):
 
         v = v[idx+1:]
         idx = v.find(":")
-        resp['service'] = v[:idx]
+        resp['resource_service'] = v[:idx]
 
         v = v[idx+1:]
         idx = v.find(":")
@@ -85,10 +128,10 @@ def parse_arn(value):
             if idx2 < 0:
                 resp['resource'] = v
             else:
-                resp['resourcetype'] = v[:idx2]
+                resp['resource_type'] = v[:idx2]
                 resp['resource'] = v[idx2+1:]
         else:
-            resp['resourcetype'] = v[:idx]
+            resp['resource_type'] = v[:idx]
             resp['resource'] = v[idx+1:]
                 
     return resp
@@ -106,10 +149,6 @@ def parse_resource(value, conds, rule, not_cond = False):
     if type(value) is list:
         i = 0
         for v in value:
-            t = "c"
-            if "*" in v or "?" in v or (v.find("${") == 0 and v.rfind("}") == len(v) - 1) :
-                t = "v"  # This is not a variable, but a wildcard
-
             if i > 0:
                 rule = rule + " | "
             rule = rule + "("
@@ -138,7 +177,7 @@ def parse_resource(value, conds, rule, not_cond = False):
                 if "*" in v or "?" in v or (v.find("${") == 0 and v.rfind("}") == len(v) - 1) :
                     t = "v"  # This is not a variable, but a wildcard
 
-                c = { "attribute": "Resource", "operator": "=", "value": v, "type": t }
+                c = { "attribute": "resource", "operator": "=", "value": v, "type": t }
 
                 if c not in conds:
                     conds.append(c)
@@ -172,7 +211,7 @@ def parse_resource(value, conds, rule, not_cond = False):
             if "*" in value or "?" in value or (value.find("${") == 0 and value.rfind("}") == len(value) - 1) :
                 t = "v"  # This is not a variable, but a wildcard
 
-            c = { "attribute": "Resource", "operator": "=", "value": value, "type": t }
+            c = { "attribute": "resource", "operator": "=", "value": value, "type": t }
 
             if c not in conds:
                 conds.append(c)
@@ -322,9 +361,9 @@ def parse(policy):
         elif st['Effect'] == "Deny":
             deny_rules.append(rule)
 
-    #print (conds)
-    #print (allow_rules)
-    #print (deny_rules)
+    print (conds)
+    print (allow_rules)
+    print (deny_rules)
 
     # Finally, allow_rules and deny_rules are combined: Allow_rules AND NOT (Deny_rules)
     # The result is a string in terms of conditions (C1, C2, ...) to be transformed into DNF
@@ -360,8 +399,8 @@ def policy2dnf(policy):
     # Convert to DNF
     rules = to_dnf(conds, rules)
 
-    print(conds)
-    print(rules)
+#    print(conds)
+#    print(rules)
 
     r1 = str(rules).strip()
     r1 = re.sub(' ', '', r1)
@@ -436,36 +475,9 @@ def policy2dnf(policy):
 
     else:
         print ("OTHER: Error!?")
-        conditions = []
         c = r1
         c = c.strip(',').strip('(').strip(')').strip('c')
         print(c)
-
-        not_cond = False                # Start considering not a negation
-        if c[0] == "~":                 # If this is a negation
-            not_cond = True                   # Mark as negation
-            c = re.sub('~','',c)              # Remove the negation symbol (~)
-
-        # Construct the conditions
-        if (c != "") and c is not None:
-            c = int(float(c))
-            cd = copy.copy(conds[c])
-            if not_cond:
-                cd['operator'] = oposite_operator(cd['operator'])
-            if cd['value'].find("%(") == 0 and cd['value'].rfind(")s") == len(cd['value']) - 2:
-                cd['type'] = "v"
-            else:
-                cd['type'] = "c"
-            cd['description'] = cd['attribute']+cd['operator']+cd['value']
-            conditions.append(cd)
-
-        # Insert the AND Rule for the current policy rule
-        data = {
-                 "description": c,
-                 "enabled": True,
-                 "conditions": conditions
-               }
-        and_rules.append(data)
 
     dnf_policy['and_rules'] = and_rules
     return dnf_policy
