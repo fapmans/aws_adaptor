@@ -4,8 +4,22 @@
         { 
           "Effect": "Allow",
           "NotAction": ["ec2:*", "s3:*"],
-          "Resource": "arn:aws:ec2:us-east-1:123456789023:instance/i-1a2b3c4d",
+          "Resource": ["arn:aws:ec2:us-east-1:123456789023:instance/i-1a2b3c4d", 
+                       "arn:aws:ec2:us-east-1:123456789023:instance/i-1a2b3c4e"],
           "Condition": {"DateGreaterThan" : {"aws:CurrentTime": "2013-12-15T12:00:00Z"}, "DateLessThan": {"aws:CurrentTime": "2013-08-16T15:00:00Z"}, "IpAddress": {"aws:SourceIp": ["192.0.2.0/24", "203.0.113.0/24"]} }
+        },
+        { 
+          "Effect": "Allow",
+          "NotAction": ["ec2:*", "s3:*"],
+          "Resource": ["arn:aws:ec2:us-west-1:123456789023:instance/i-1a2b3c4d", 
+                       "arn:aws:ec2:us-west-1:123456789023:instance/i-1a2b3c4e"],
+          "Condition": {"DateGreaterThan" : {"aws:CurrentTime": "2013-12-15T12:00:00Z"}, "DateLessThan": {"aws:CurrentTime": "2013-08-16T15:00:00Z"}, "IpAddress": {"aws:SourceIp": ["192.0.2.0/24", "203.0.113.0/24"]} }
+        },
+        { 
+          "Effect": "Deny",
+          "Action": "ec2:*",
+          "Resource": "arn:aws:ec2:us-west-1:123456789023:instance/i-1a2b3c4d",
+          "Condition": {"DateGreaterThan" : {"aws:CurrentTime": "2013-12-15T12:00:00Z"}, "DateLessThan": {"aws:CurrentTime": "2013-08-16T15:00:00Z"}, "IpAddress": {"aws:SourceIp": ["192.0.0.0/24", "200.0.0.0/24"]} }
         }
      ]
    }
