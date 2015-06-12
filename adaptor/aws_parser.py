@@ -31,29 +31,13 @@ def value_type(value):
     return t
 
 
-def parse_action_entry(value, conds, rule):
+def parse_entry(value, conds, rule):
 
-    idx = value.find(":")
-    if idx > 0:
-        service = value[:idx]
-        action = value[idx+1:]
-
-        c = { "attribute": "action_service", "operator": "=", "value": service, "type": value_type(service) }
-
-        if c not in conds:
-            conds.append(c)
-        rule = rule + "(c" + str(conds.index(c)) + " & " # Open ACTION_SERVICE + ACTION
-
-    else:
-        action = value
-
-    c = { "attribute": "action", "operator": "=", "value": action, "type": value_type(action) }
+    c = { "attribute": "action", "operator": "=", "value": value, "type": value_type(value) }
 
     if c not in conds:
         conds.append(c)
     rule = rule + "c" + str(conds.index(c))
-    if idx > 0:
-        rule = rule + ")" # Closes ACTION_SERVICE + ACTION
 
     return conds, rule
 
@@ -72,7 +56,7 @@ def parse_action(value, conds, rule, not_cond = False):
         for v in value:
             if i > 0:
                 rule = rule + " | "
-            conds, rule = parse_action_entry(v, conds, rule)
+            conds, rule = parse_entry(v, conds, rule)
             i = i + 1
 
     else:
