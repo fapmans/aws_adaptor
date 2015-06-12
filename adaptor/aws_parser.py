@@ -213,14 +213,14 @@ def parse_principal(value, conds, rule, not_cond = False):
 
     if type(value) is dict:
         i = 0
-        for principal_type, val in value.items():
+        for principal_origin, val in value.items():
             if i > 0:
                 rule = rule + " | (" # Open Principal item
             else:
                 rule = rule + "("    # Open Principal item
 
             # Create a Principal_Type condition
-            c = { "attribute": "principal_type", "operator": "=", "value": principal_type, "type": value_type(principal_type) }
+            c = { "attribute": "principal_origin", "operator": "=", "value": principal_origin, "type": value_type(principal_origin) }
 
             if c not in conds:
                 conds.append(c)
