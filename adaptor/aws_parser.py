@@ -30,7 +30,6 @@ def value_type(value):
 
     return t
 
-
 def parse_entry(value, conds, rule):
 
     c = { "attribute": "action", "operator": "=", "value": value, "type": value_type(value) }
@@ -39,6 +38,15 @@ def parse_entry(value, conds, rule):
         conds.append(c)
     rule = rule + "c" + str(conds.index(c))
 
+    return conds, rule
+
+def parse_condition_entry(att, op, val, conds, rule):
+    c = { "attribute": att, "operator": op, "value": val, "type": value_type(val) }
+
+    if c not in conds:
+        conds.append(c)
+    rule = rule + "c" + str(conds.index(c))
+    
     return conds, rule
 
 def parse_action(value, conds, rule, not_cond = False):
@@ -60,7 +68,7 @@ def parse_action(value, conds, rule, not_cond = False):
             i = i + 1
 
     else:
-        conds, rule = parse_action_entry(value, conds, rule)
+        conds, rule = parse_entry(value, conds, rule)
 
     rule = rule + ")" # Closes ACTION
 
@@ -109,31 +117,6 @@ def parse_arn(value, type):
                 
     return resp
 
-def parse_resource_entry(value, conds, rule):
-    if value[:4] == "arn:":
-        values = parse_arn(value, "resource")
-
-        j = 0
-        for att, val in values.items():
-            c = { "attribute": att, "operator": "=", "value": val, "type": value_type(val) }
-
-            if c not in conds:
-                conds.append(c)
-
-            if j > 0:
-                rule = rule + " & "
-            rule = rule + "c" + str(conds.index(c))
-            j += 1
-    else:
-        c = { "attribute": "resource", "operator": "=", "value": value, "type": value_type(value) }
-
-        if c not in conds:
-            conds.append(c)
-
-        rule = rule + "c" + str(conds.index(c))
-
-    return conds, rule
-
 def parse_resource(value, conds, rule, not_cond = False):
     nt = ""
     if not_cond:
@@ -150,40 +133,15 @@ def parse_resource(value, conds, rule, not_cond = False):
             if i > 0:
                 rule = rule + " | "
             rule = rule + "("
-            conds, rule = parse_resource_entry(v, conds, rule)
+            conds, rule = parse_entry(v, conds, rule)
             rule = rule + ")"
             i += 1
     else:
-        conds, rule = parse_resource_entry(value, conds, rule)
+        conds, rule = parse_entry(value, conds, rule)
 
     rule = rule + ")"
 
     return rule, conds
-
-def parse_principal_entry(value, conds, rule):
-    if value[:4] == "arn:":
-        values = parse_arn(value, "principal")
-
-        j = 0
-        for att, val in values.items():
-            c = { "attribute": att, "operator": "=", "value": val, "type": value_type(val) }
-
-            if c not in conds:
-                conds.append(c)
-
-            if j > 0:
-                rule = rule + " & "
-            rule = rule + "c" + str(conds.index(c))
-            j += 1
-    else:
-        c = { "attribute": "principal", "operator": "=", "value": value, "type": value_type(value) }
-
-        if c not in conds:
-            conds.append(c)
-
-        rule = rule + "c" + str(conds.index(c))
-
-    return conds, rule
 
 def parse_principal(value, conds, rule, not_cond = False):
     nt = ""
@@ -216,32 +174,23 @@ def parse_principal(value, conds, rule, not_cond = False):
                 for prin in val:
                     rule = rule + " & (" # Open Principal item value
 
-                    conds, rule = parse_principal_entry(prin, conds, rule)
+                    conds, rule = parse_entry(prin, conds, rule)
 
                     rule = rule + ")"        # Close Principal item value
                     j += 1
 
             else: # "Principal": {"AWS": "arn:aws:iam::AWS-account-ID:user/user-name"} | "Principal": {"AWS": "AWS-account-ID"}
-                conds, rule = parse_principal_entry(val, conds, rule)
+                conds, rule = parse_entry(val, conds, rule)
 
             rule = rule + ")" # Close Principal item
             i += 1
 
     else: # "Principal": "*"
-        conds, rule = parse_principal_entry(value, conds, rule)
+        conds, rule = parse_entry(value, conds, rule)
 
     rule = rule + ")" # Close Principal
 
     return rule, conds
-
-def parse_condition_entry(att, op, val, conds, rule):
-    c = { "attribute": att, "operator": op, "value": val, "type": value_type(val) }
-
-    if c not in conds:
-        conds.append(c)
-    rule = rule + "c" + str(conds.index(c))
-    
-    return conds, rule
 
 def parse_condition(value, conds, rule):
     for op, v in value.items():
