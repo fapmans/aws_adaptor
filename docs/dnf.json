@@ -1,133 +1,50 @@
 {
-    "format" : "aws",
+    "format": "aws",
     "dnf_policy": {
         "and_rules": [
             {
                 "conditions": [
                     {
-                        "attribute": "principal_type",
-                        "description": "principal_type=AWS",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "AWS"
-                    },
-                    {
-                        "attribute": "principal_account",
-                        "description": "principal_account=12345678012",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "12345678012"
-                    },
-                    {
-                        "attribute": "principal",
-                        "description": "principal=root",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "root"
-                    },
-                    {
-                        "attribute": "principal_partition",
-                        "description": "principal_partition=aws",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "aws"
-                    },
-                    {
-                        "attribute": "principal_service",
-                        "description": "principal_service=iam",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "iam"
-                    },
-                    {
-                        "attribute": "action_service",
-                        "description": "action_service=s3",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "s3"
+                        "attribute": "action",
+                        "description": "action!=ec2:*",
+                        "operator": "!=",
+                        "type": "w",
+                        "value": "ec2:*"
                     },
                     {
                         "attribute": "action",
-                        "description": "action=*",
-                        "operator": "=",
+                        "description": "action!=s3:*",
+                        "operator": "!=",
                         "type": "w",
-                        "value": "*"
-                    },
-                    {
-                        "attribute": "resource_partition",
-                        "description": "resource_partition=aws",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "aws"
+                        "value": "s3:*"
                     },
                     {
                         "attribute": "resource",
-                        "description": "resource=mybucket",
+                        "description": "resource=i-1a2b3c4d",
                         "operator": "=",
                         "type": "c",
-                        "value": "mybucket"
+                        "value": "i-1a2b3c4d"
+                    },
+                    {
+                        "attribute": "resource_account",
+                        "description": "resource_account=123456789023",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456789023"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=instance",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "instance"
                     },
                     {
                         "attribute": "resource_service",
-                        "description": "resource_service=s3",
+                        "description": "resource_service=ec2",
                         "operator": "=",
                         "type": "c",
-                        "value": "s3"
-                    }
-                ],
-                "description": "(c0,c1,c2,c3,c4,c5,c6,c7,c8,c9)0",
-                "enabled": true
-            },
-            {
-                "conditions": [
-                    {
-                        "attribute": "principal_type",
-                        "description": "principal_type=AWS",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "AWS"
-                    },
-                    {
-                        "attribute": "principal_account",
-                        "description": "principal_account=12345678012",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "12345678012"
-                    },
-                    {
-                        "attribute": "principal",
-                        "description": "principal=root",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "root"
-                    },
-                    {
-                        "attribute": "principal_partition",
-                        "description": "principal_partition=aws",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "aws"
-                    },
-                    {
-                        "attribute": "principal_service",
-                        "description": "principal_service=iam",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "iam"
-                    },
-                    {
-                        "attribute": "action_service",
-                        "description": "action_service=s3",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "s3"
-                    },
-                    {
-                        "attribute": "action",
-                        "description": "action=*",
-                        "operator": "=",
-                        "type": "w",
-                        "value": "*"
+                        "value": "ec2"
                     },
                     {
                         "attribute": "resource_partition",
@@ -135,13 +52,6 @@
                         "operator": "=",
                         "type": "c",
                         "value": "aws"
-                    },
-                    {
-                        "attribute": "resource_service",
-                        "description": "resource_service=s3",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "s3"
                     },
                     {
                         "attribute": "resource_connector",
@@ -151,24 +61,23 @@
                         "value": "/"
                     },
                     {
-                        "attribute": "resource_type",
-                        "description": "resource_type=mybucket",
+                        "attribute": "resource_region",
+                        "description": "resource_region=us-east-1",
                         "operator": "=",
                         "type": "c",
-                        "value": "mybucket"
+                        "value": "us-east-1"
                     },
                     {
-                        "attribute": "resource",
-                        "description": "resource=*",
-                        "operator": "=",
-                        "type": "w",
-                        "value": "*"
+                        "attribute": "aws:CurrentTime",
+                        "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
+                        "operator": "DateGreaterThan",
+                        "type": "c",
+                        "value": "2013-12-15T12:00:00Z"
                     }
                 ],
-                "description": "(c0,c1,c2,c3,c4,c5,c6,c7,c9,c10,c11,c12)1",
+                "description": "~c0,~c1,c2,c3,c4,c5,c6,c7,c8,c9",
                 "enabled": true
             }
         ]
     }
 }
-

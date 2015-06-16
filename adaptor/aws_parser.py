@@ -49,31 +49,6 @@ def parse_condition_entry(att, op, val, conds, rule):
     
     return conds, rule
 
-def parse_action(value, conds, rule, not_cond = False):
-    nt = ""
-    if not_cond:
-        nt = "~"
-
-    if rule != "":
-        rule = rule + " & " + nt + "("  # Open ACTION
-    else:
-        rule = nt + "("                 # Open ACTION
-
-    if type(value) is list:
-        i = 0
-        for v in value:
-            if i > 0:
-                rule = rule + " | "
-            conds, rule = parse_entry(v, conds, rule)
-            i = i + 1
-
-    else:
-        conds, rule = parse_entry(value, conds, rule)
-
-    rule = rule + ")" # Closes ACTION
-
-    return rule, conds
-
 def parse_arn(value, type):
 
     resp = {}
@@ -117,6 +92,89 @@ def parse_arn(value, type):
                 
     return resp
 
+def parse_resource_entry(value, conds, rule):
+    if value[:4] == "arn:":
+        values = parse_arn(value, "resource")
+
+        j = 0
+        for att, val in values.items():
+            c = { "attribute": att, "operator": "=", "value": val, "type": value_type(val) }
+
+            if c not in conds:
+                conds.append(c)
+
+            if j > 0:
+                rule = rule + " & "
+            rule = rule + "c" + str(conds.index(c))
+            j += 1
+    else:
+        c = { "attribute": "resource", "operator": "=", "value": value, "type": value_type(value) }
+
+        if c not in conds:
+            conds.append(c)
+
+        rule = rule + "c" + str(conds.index(c))
+
+    return conds, rule
+
+def parse_principal_entry(origin, value, conds, rule):
+    if origin != "": # origin (AWS, Federated, ...)
+        if value[:4] == "arn:": # value is arn
+            values = parse_arn(value, "principal")
+
+            j = 0
+            for att, val in values.items():
+                c = { "attribute": att, "operator": "=", "value": origin + ":" + val, "type": value_type(val) }
+
+                if c not in conds:
+                    conds.append(c)
+
+                if j > 0:
+                    rule = rule + " & "
+                rule = rule + "c" + str(conds.index(c))
+                j += 1
+        else: # value is not arn
+            c = { "attribute": "principal", "operator": "=", "value": origin + ":" + value, "type": value_type(value) }
+
+            if c not in conds:
+                conds.append(c)
+
+            rule = rule + "c" + str(conds.index(c))
+    else: # not origin (suppor it is *)
+            c = { "attribute": "principal", "operator": "=", "value": value, "type": value_type(value) }
+
+            if c not in conds:
+                conds.append(c)
+
+            rule = rule + "c" + str(conds.index(c))
+
+    return conds, rule
+
+def parse_action(value, conds, rule, not_cond = False):
+    nt = ""
+    if not_cond:
+        nt = "~"
+
+    if rule != "":
+        rule = rule + " & " + nt + "("  # Open ACTION
+    else:
+        rule = nt + "("                 # Open ACTION
+
+    if type(value) is list:
+        i = 0
+        for v in value:
+            if i > 0:
+                rule = rule + " | "
+            conds, rule = parse_entry(v, conds, rule)
+            i = i + 1
+
+    else:
+        conds, rule = parse_entry(value, conds, rule)
+
+    rule = rule + ")" # Closes ACTION
+
+    return rule, conds
+
 def parse_resource(value, conds, rule, not_cond = False):
     nt = ""
     if not_cond:
@@ -133,11 +191,11 @@ def parse_resource(value, conds, rule, not_cond = False):
             if i > 0:
                 rule = rule + " | "
             rule = rule + "("
-            conds, rule = parse_entry(v, conds, rule)
+            conds, rule = parse_resource_entry(v, conds, rule)
             rule = rule + ")"
             i += 1
     else:
-        conds, rule = parse_entry(value, conds, rule)
+        conds, rule = parse_resource_entry(value, conds, rule)
 
     rule = rule + ")"
 
@@ -161,32 +219,25 @@ def parse_principal(value, conds, rule, not_cond = False):
             else:
                 rule = rule + "("    # Open Principal item
 
-            # Create a Principal_Type condition
-            c = { "attribute": "principal_origin", "operator": "=", "value": principal_origin, "type": value_type(principal_origin) }
-
-            if c not in conds:
-                conds.append(c)
-            rule = rule + "c" + str(conds.index(c))
-
             # Create Principal conditions
             if type(val) is list: # "Principal": {"AWS": ["arn:aws:iam::AWS-account-ID:user/user-name-1",  "arn:aws:iam::AWS-account-ID:user/UserName2" ]}
                 j = 0
                 for prin in val:
-                    rule = rule + " & (" # Open Principal item value
+                    rule = rule + "(" # Open Principal item value
 
-                    conds, rule = parse_entry(prin, conds, rule)
+                    conds, rule = parse_principal_entry(principal_origin, prin, conds, rule)
 
                     rule = rule + ")"        # Close Principal item value
                     j += 1
 
             else: # "Principal": {"AWS": "arn:aws:iam::AWS-account-ID:user/user-name"} | "Principal": {"AWS": "AWS-account-ID"}
-                conds, rule = parse_entry(val, conds, rule)
+                conds, rule = parse_principal_entry(principal_origin, val, conds, rule)
 
             rule = rule + ")" # Close Principal item
             i += 1
 
     else: # "Principal": "*"
-        conds, rule = parse_entry(value, conds, rule)
+        conds, rule = parse_principal_entry("", value, conds, rule)
 
     rule = rule + ")" # Close Principal
 
@@ -412,8 +463,8 @@ def combine(conditions, type):
         principal = {}
 
         for cond in conditions:
-            if cond['attribute'] == 'principal_type':
-                principal['type'] = cond['value']
+            if cond['attribute'] == 'principal_origin':
+                principal['origin'] = cond['value']
             elif cond['attribute'] == 'principal_partition':
                 principal['partition'] = cond['value']
             elif cond['attribute'] == 'principal_service':
@@ -424,13 +475,15 @@ def combine(conditions, type):
                 principal['account'] = cond['value']
             elif cond['attribute'] == 'principal':
                 principal['value'] = cond['value']
+            if cond['attribute'] == 'principal_type':
+                principal['type'] = cond['value']
             else:
                 print(cond)
 
         principal_item = {}
 
-        if 'type' in principal:
-            principal_item[principal['type']] = []
+        if 'origin' in principal:
+            principal_item[principal['origin']] = []
             if 'partition' in principal or \
                 'service' in principal or \
                 'region' in principal or \
@@ -515,30 +568,29 @@ def combine(conditions, type):
                 arn = arn + resource['type']
             if 'connector' in resource:
                 arn = arn + resource['connector']
+            if 'value' in resource:
+                arn = arn + resource['value']
+            else:
+                arn = arn + "*"
 
-            arn = arn + resource['value']
             resource_item = arn
 
         else:
-            resource_item = resource['value']
-                
+            if 'value' in resource:
+                resource_item = resource['value']
+            else:
+                resource_item = "*"
+
         resp = resource_item
 
     elif type == 'Action':
-        action = {}
+        action_list = []
 
         for cond in conditions:
-            if cond['attribute'] == 'action_service':
-                action['service'] = cond['value']
-            elif cond['attribute'] == 'action':
-                action['value'] = cond['value']
+            if cond['attribute'] == 'action':
+                action_list.append( cond['value'] )
 
-        action_item = ""
-        if 'service' in action:
-            action_item = action_item + action['service'] + ":"
-        action_item = action_item + action['value']
-
-        resp = action_item
+        resp = action_list
 
     elif type == 'Condition':
         condition = {}
@@ -565,27 +617,39 @@ def combine(conditions, type):
         pass
 
     elif type == 'NotAction':
-        pass
-
-        ''' print(conditions)
-        action = {}
+#        print(conditions)
+        action_list = []
 
         for cond in conditions:
-            if cond['attribute'] == 'action_service':
-                action['service'] = cond['value']
-            elif cond['attribute'] == 'action':
-                action['value'] = cond['value']
+            if cond['attribute'] == 'action':
+                action_list.append( cond['value'] )
 
-        action_item = ""
-        if 'service' in action:
-            action_item = action_item + action['service'] + ":"
-        action_item = action_item + action['value']
-
-        resp = action_item'''
+        resp = action_list
 
 
     elif type == 'NotResource':
         pass
+        '''print(conditions)
+
+        resource = {}
+
+        for cond in conditions:
+            if cond['attribute'] == 'resource_partition':
+                resource['partition'] = cond['value']
+            elif cond['attribute'] == 'resource_service':
+                resource['service'] = cond['value']
+            elif cond['attribute'] == 'resource_region':
+                resource['region'] = cond['value']
+            elif cond['attribute'] == 'resource_account':
+                resource['account'] = cond['value']
+            elif cond['attribute'] == 'resource_type':
+                resource['type'] = cond['value']
+            elif cond['attribute'] == 'resource_connector':
+                resource['connector'] = cond['value']
+            elif cond['attribute'] == 'resource':
+                resource['value'] = cond['value']
+
+        resp = resource'''
 
     else: 
         # Condition
