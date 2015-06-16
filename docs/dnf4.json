@@ -1,0 +1,115 @@
+{
+    "format": "aws",
+    "dnf_policy": {
+        "and_rules": [
+            {
+                "conditions": [
+                    {
+                        "attribute": "resource",
+                        "description": "resource=arn:aws:s3:::mybucket",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "arn:aws:s3:::mybucket"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=s3:*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "s3:*"
+                    },
+                    {
+                        "attribute": "principal",
+                        "description": "principal=AWS:arn:aws:iam::12345678012:root",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "AWS:arn:aws:iam::12345678012:root"
+                    }
+                ],
+                "description": "(c0,c2,c3)0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "resource",
+                        "description": "resource=arn:aws:s3:::mybucket/*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "arn:aws:s3:::mybucket/*"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=s3:*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "s3:*"
+                    },
+                    {
+                        "attribute": "principal",
+                        "description": "principal=AWS:arn:aws:iam::12345678012:root",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "AWS:arn:aws:iam::12345678012:root"
+                    }
+                ],
+                "description": "(c1,c2,c3)1",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "resource",
+                        "description": "resource=arn:aws:s3:::mybucket",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "arn:aws:s3:::mybucket"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=s3:*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "s3:*"
+                    },
+                    {
+                        "attribute": "principal",
+                        "description": "principal=AWS:123456789013",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "AWS:123456789013"
+                    }
+                ],
+                "description": "(c0,c2,c4)2",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "resource",
+                        "description": "resource=arn:aws:s3:::mybucket/*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "arn:aws:s3:::mybucket/*"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=s3:*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "s3:*"
+                    },
+                    {
+                        "attribute": "principal",
+                        "description": "principal=AWS:123456789013",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "AWS:123456789013"
+                    }
+                ],
+                "description": "(c1,c2,c4)3",
+                "enabled": true
+            }
+        ]
+    }
+}

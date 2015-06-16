@@ -7,7 +7,7 @@
   "Statement": [{
     "Sid": "1",
     "Effect": "Allow",
-    "Principal": {"AWS": ["arn:aws:iam::12345678012:root"]},
+    "Principal": {"AWS": ["arn:aws:iam::12345678012:root", "123456789013"]},
     "Action": "s3:*",
     "Resource": [
       "arn:aws:s3:::mybucket",
