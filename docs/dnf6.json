@@ -1,0 +1,61 @@
+{
+    "format": "aws",
+    "dnf_policy": {
+        "and_rules": [
+            {
+                "conditions": [
+                    {
+                        "attribute": "resource",
+                        "description": "resource=*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "*"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "*"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=iam:*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "iam:*"
+                    }
+                ],
+                "description": "(c0,c1,c2)0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "resource",
+                        "description": "resource=*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "*"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "*"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=sts:*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "sts:*"
+                    }
+                ],
+                "description": "(c0,c1,c3)1",
+                "enabled": true
+            }
+        ]
+    }
+}

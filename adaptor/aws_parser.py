@@ -486,6 +486,81 @@ def create_statement_entry(conditions, type):
 
     return resp
 
+def remove_duplicate_entries(policy):
+
+    #print(policy)    #{'Statement': [{'Action': '*', 'NotAction': ['iam:*', 'sts:*'], 'Resource': '*', 'Effect': 'Allow'}]}
+
+    new_policy = []
+
+    for statement in policy['Statement']:
+
+        added = False
+
+        if 'Action' in statement:
+            if 'NotAction' in statement:
+                st1 = {}
+                st2 = {}
+                for att, value in statement.items():
+                    if att == 'Action':
+                        st1[att] = value
+                    elif att == 'NotAction':
+                        st2['Action'] = value
+                    elif att == 'Effect':
+                        st1[att] = 'Allow'
+                        st2[att] = 'Deny'
+                    else:
+                        st1[att] = value
+                        st2[att] = value
+             
+                new_policy.append(st1)
+                new_policy.append(st2)
+                added = True
+
+        if 'Resource' in statement:
+            if 'NotResource' in statement:
+                st1 = {}
+                st2 = {}
+                for att, value in statement.items():
+                    if att == 'Resource':
+                        st1[att] = value
+                    elif att == 'NotResource':
+                        st2['Resource'] = value
+                    elif att == 'Effect':
+                        st1[att] = 'Allow'
+                        st2[att] = 'Deny'
+                    else:
+                        st1[att] = value
+                        st2[att] = value
+             
+                new_policy.append(st1)
+                new_policy.append(st2)
+                added = True
+
+        if 'Principal' in statement:
+            if 'NotPrincipal' in statement:
+                st1 = {}
+                st2 = {}
+                for att, value in statement.items():
+                    if att == 'Principal':
+                        st1[att] = value
+                    elif att == 'NotPrincipal':
+                        st2['Principal'] = value
+                    elif att == 'Effect':
+                        st1[att] = 'Allow'
+                        st2[att] = 'Deny'
+                    else:
+                        st1[att] = value
+                        st2[att] = value
+             
+                new_policy.append(st1)
+                new_policy.append(st2)
+                added = True
+
+        if not added:
+            new_policy.append(statement)
+
+    return new_policy
+
 def policy2local(dnf_policy):
 
     policy = {}
@@ -545,5 +620,7 @@ def policy2local(dnf_policy):
         for attr, conds in statement.items():
              statement[attr] = create_statement_entry(conds, attr)
         statement['Effect'] = 'Allow'
+
+    policy = remove_duplicate_entries(policy)
 
     return policy
