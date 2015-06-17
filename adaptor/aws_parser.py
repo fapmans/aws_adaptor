@@ -394,7 +394,10 @@ def policy2dnf(policy):
 def create_statement_entry(conditions, type):
     resp = {}
 
-    # Positive rules
+    # ** - This statement is NOT correct, since lists uses to mean OR and in this case it means AND
+    #      This will be FIXED by the remove_duplicate_entries function, which will split statements
+    #      with multiple entries of the same type.
+
     if type == 'Principal' or type == 'NotPrincipal':
 
         principal = {}
@@ -406,7 +409,7 @@ def create_statement_entry(conditions, type):
             if idx > 0:
                 principal_origin = cond['value'][:idx]
                 if principal_origin in principal:
-                    if principal[principal_origin] is list:
+                    if principal[principal_origin] is list: # **
                         principal[principal_origin].append(cond['value'][idx+1:])
                     else:
                         tmp = principal[principal_origin]
@@ -426,7 +429,7 @@ def create_statement_entry(conditions, type):
         resource = ""
 
         for cond in conditions:
-            if resource is list:
+            if resource is list: # **
                 resource.append(cond['value'])
             else:
                 if resource != "":
@@ -444,7 +447,7 @@ def create_statement_entry(conditions, type):
         action = ""
 
         for cond in conditions:
-            if action is list:
+            if action is list: # **
                 action.append(cond['value'])
             else:
                 if action != "":
@@ -488,6 +491,8 @@ def create_statement_entry(conditions, type):
 
 def remove_duplicate_entries(policy):
 
+    # ** : Fixes the issue with multiple rules of the same type in the same statement (list means AND and not OR)
+
     #print(policy)    #{'Statement': [{'Action': '*', 'NotAction': ['iam:*', 'sts:*'], 'Resource': '*', 'Effect': 'Allow'}]}
 
     new_policy = []
@@ -511,11 +516,32 @@ def remove_duplicate_entries(policy):
                     else:
                         st1[att] = value
                         st2[att] = value
-             
-                new_policy.append(st1)
-                new_policy.append(st2)
+                if st1 not in new_policy:
+                    new_policy.append(st1)
+                if st2 not in new_policy:
+                    new_policy.append(st2)
                 added = True
 
+            if type(statement['Action']) is list: # **
+                st1 = {}
+                st2 = {}
+                for att, value in statement.items():
+                    if att == 'Action':
+                        st1[att] = value[0] # List should have only 2 entries (0 and 1)
+                        st2['NotAction'] = value[1]
+                    elif att == 'Effect':
+                        st1[att] = 'Allow'
+                        st2[att] = 'Deny'
+                    else:
+                        st1[att] = value
+                        st2[att] = value
+             
+                if st1 not in new_policy:
+                    new_policy.append(st1)
+                if st2 not in new_policy:
+                    new_policy.append(st2)
+                added = True
+                
         if 'Resource' in statement:
             if 'NotResource' in statement:
                 st1 = {}
@@ -532,10 +558,32 @@ def remove_duplicate_entries(policy):
                         st1[att] = value
                         st2[att] = value
              
-                new_policy.append(st1)
-                new_policy.append(st2)
+                if st1 not in new_policy:
+                    new_policy.append(st1)
+                if st2 not in new_policy:
+                    new_policy.append(st2)
                 added = True
 
+            if type(statement['Resource']) is list: # **
+                st1 = {}
+                st2 = {}
+                for att, value in statement.items():
+                    if att == 'Resource':
+                        st1[att] = value[0] # List should have only 2 entries (0 and 1)
+                        st2['NotResource'] = value[1]
+                    elif att == 'Effect':
+                        st1[att] = 'Allow'
+                        st2[att] = 'Deny'
+                    else:
+                        st1[att] = value
+                        st2[att] = value
+             
+                if st1 not in new_policy:
+                    new_policy.append(st1)
+                if st2 not in new_policy:
+                    new_policy.append(st2)
+                added = True
+                
         if 'Principal' in statement:
             if 'NotPrincipal' in statement:
                 st1 = {}
@@ -552,12 +600,35 @@ def remove_duplicate_entries(policy):
                         st1[att] = value
                         st2[att] = value
              
-                new_policy.append(st1)
-                new_policy.append(st2)
+                if st1 not in new_policy:
+                    new_policy.append(st1)
+                if st2 not in new_policy:
+                    new_policy.append(st2)
+                added = True
+
+            if type(statement['Principal']) is list: # **
+                st1 = {}
+                st2 = {}
+                for att, value in statement.items():
+                    if att == 'Principal':
+                        st1[att] = value[0] # List should have only 2 entries (0 and 1)
+                        st2['NotPrincipal'] = value[1]
+                    elif att == 'Effect':
+                        st1[att] = 'Allow'
+                        st2[att] = 'Deny'
+                    else:
+                        st1[att] = value
+                        st2[att] = value
+             
+                if st1 not in new_policy:
+                    new_policy.append(st1)
+                if st2 not in new_policy:
+                    new_policy.append(st2)
                 added = True
 
         if not added:
-            new_policy.append(statement)
+            if statement not in new_policy:
+                new_policy.append(statement)
 
     return new_policy
 
