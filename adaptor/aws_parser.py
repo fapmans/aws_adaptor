@@ -461,6 +461,7 @@ def create_statement_entry(conditions, type):
         resp = action
 
     elif type == 'Condition':
+
         condition = {}
 
         for cond in conditions:
@@ -523,23 +524,8 @@ def remove_duplicate_entries(policy):
                 added = True
 
             if type(statement['Action']) is list: # **
-                st1 = {}
-                st2 = {}
-                for att, value in statement.items():
-                    if att == 'Action':
-                        st1[att] = value[0] # List should have only 2 entries (0 and 1)
-                        st2['NotAction'] = value[1]
-                    elif att == 'Effect':
-                        st1[att] = 'Allow'
-                        st2[att] = 'Deny'
-                    else:
-                        st1[att] = value
-                        st2[att] = value
-             
-                if st1 not in new_policy:
-                    new_policy.append(st1)
-                if st2 not in new_policy:
-                    new_policy.append(st2)
+                print("Error! Statement with two Actions! Not included.")
+                print(statement)
                 added = True
                 
         if 'Resource' in statement:
@@ -565,25 +551,10 @@ def remove_duplicate_entries(policy):
                 added = True
 
             if type(statement['Resource']) is list: # **
-                st1 = {}
-                st2 = {}
-                for att, value in statement.items():
-                    if att == 'Resource':
-                        st1[att] = value[0] # List should have only 2 entries (0 and 1)
-                        st2['NotResource'] = value[1]
-                    elif att == 'Effect':
-                        st1[att] = 'Allow'
-                        st2[att] = 'Deny'
-                    else:
-                        st1[att] = value
-                        st2[att] = value
-             
-                if st1 not in new_policy:
-                    new_policy.append(st1)
-                if st2 not in new_policy:
-                    new_policy.append(st2)
+                print("Error! Statement with two Resources! Not included.")
+                print(statement)
                 added = True
-                
+
         if 'Principal' in statement:
             if 'NotPrincipal' in statement:
                 st1 = {}
@@ -607,23 +578,8 @@ def remove_duplicate_entries(policy):
                 added = True
 
             if type(statement['Principal']) is list: # **
-                st1 = {}
-                st2 = {}
-                for att, value in statement.items():
-                    if att == 'Principal':
-                        st1[att] = value[0] # List should have only 2 entries (0 and 1)
-                        st2['NotPrincipal'] = value[1]
-                    elif att == 'Effect':
-                        st1[att] = 'Allow'
-                        st2[att] = 'Deny'
-                    else:
-                        st1[att] = value
-                        st2[att] = value
-             
-                if st1 not in new_policy:
-                    new_policy.append(st1)
-                if st2 not in new_policy:
-                    new_policy.append(st2)
+                print("Error! Statement with two Principals! Not included.")
+                print(statement)
                 added = True
 
         if not added:
