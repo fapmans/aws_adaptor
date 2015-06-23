@@ -130,8 +130,6 @@ def parse_resource(value, conds, rule, not_cond = False):
 
     rule = rule + ")"
 
-    print(rule)
-
     return rule, conds
 
 def parse_principal(value, conds, rule, not_cond = False):
@@ -173,7 +171,7 @@ def parse_principal(value, conds, rule, not_cond = False):
                             rule = rule + ")"
                             k += 1
                     else:
-                        conds, rule = parse_entry("principal", "=", principal_origin+":"+prin, conds, rule)
+                        conds, rule = parse_entry("principal_account", "=", principal_origin+":"+prin, conds, rule)
                     #########
 
                     rule = rule + ")"        # Close Principal item value
@@ -202,8 +200,6 @@ def parse_principal(value, conds, rule, not_cond = False):
         conds, rule = parse_entry("principal", "=", value, conds, rule)
 
     rule = rule + ")" # Close Principal
-
-    print (rule)
 
     return rule, conds
 
@@ -454,10 +450,122 @@ def create_statement_entry(conditions, type):
 
         principal = {}
 
+        principal_origin = ""
+
+        principal_count = 0
+        principal_account_count = 0
+	
         for cond in conditions:
+
+            if cond['attribute'] == 'principal_partition':
+                idx = cond['value'].find(":")
+                if idx > 0:
+                    principal['origin'] = cond['value'][:idx]
+                    principal['partition'] = cond['value'][idx+1:]
+                else: # Should NEVER happen
+                    principal['partition'] = cond['value']
+                    print("Partition with no origin")
+                     
+            elif cond['attribute'] == 'principal_service':
+                idx = cond['value'].find(":")
+                if idx > 0:
+                    principal['origin'] = cond['value'][:idx]
+                    principal['service'] = cond['value'][idx+1:]
+                else: # Should NEVER happen
+                    principal['service'] = cond['value']
+                    print("Service with no origin")
+                     
+            elif cond['attribute'] == 'principal_region':
+                idx = cond['value'].find(":")
+                if idx > 0:
+                    principal['origin'] = cond['value'][:idx]
+                    principal['region'] = cond['value'][idx+1:]
+                else: # Should NEVER happen
+                    principal['region'] = cond['value']
+                    print("Region with no origin")
+
+            elif cond['attribute'] == 'principal_account':
+                idx = cond['value'].find(":")
+                if idx > 0:
+                    principal['origin'] = cond['value'][:idx]
+                    principal['account'] = cond['value'][idx+1:]
+                else: # Should NEVER happen
+                    principal['account'] = cond['value']
+                    print("Account with no origin")
+                principal_account_count += 1
+
+            elif cond['attribute'] == 'principal_type':
+                idx = cond['value'].find(":")
+                if idx > 0:
+                    principal['origin'] = cond['value'][:idx]
+                    principal['type'] = cond['value'][idx+1:]
+                else: # Should NEVER happen
+                    principal['type'] = cond['value']
+                    print("Type with no origin")
+
+            elif cond['attribute'] == 'principal':
+                idx = cond['value'].find(":")
+                if idx > 0:
+                    principal['origin'] = cond['value'][:idx]
+                    principal['value'] = cond['value'][idx+1:]
+                else: # *
+                    principal['value'] = cond['value']
+                principal_count += 1
+            else:
+                print(cond) # Unexpected condition!
+
+        principal_item = {}
+
+        if 'origin' in principal:
+
+            if 'partition' in principal or \
+                'service' in principal or \
+                'region' in principal or \
+                'account' in principal or \
+                'type' in principal:
+                arn = "arn:"
+                if 'partition' in principal:
+                    arn = arn + principal['partition'] + ":"
+                else:
+                    arn = arn + ":"
+                if 'service' in principal:
+                    arn = arn + principal['service'] + ":"
+                else:
+                    arn = arn + ":"
+                if 'region' in principal:
+                    arn = arn + principal['region'] + ":"
+                else:
+                    arn = arn + ":"
+                if 'account' in principal:
+                    arn = arn + principal['account'] + ":"
+                else:
+                    arn = arn + ":"
+                if 'type' in principal:
+                    arn = arn + principal['account'] + ":"
+                    if 'service' in principal and principal['service'] in ['ec2','iam','s3','dynamodb']:
+                        arn = arn + "/"
+                    else:
+                        arn = arn + ":"
+                if 'value' in principal:
+                    arn = arn + principal['value']
+                else:
+                    arn = arn + "*"
+
+            else: # "AWS": "{not_arn}"
+                arn = principal['value']
+
+            principal_item[principal['origin']] = arn
+
+        else: # *
+            arn = principal['value']
+            principal_item = arn
+
+        # This code handles the case where two principals comes into a single statement.
+        # This should never happen! Eg. Principal-Allow & NotPrincipal-Deny, NotPrincipal-Allow & Principal-Deny 
+        '''for cond in conditions:
             idx = cond['value'].find(":")
-            print(cond)
-            print(idx)
+            #print(cond)
+            #print(idx)
             if idx > 0:
                 principal_origin = cond['value'][:idx]
                 if principal_origin in principal:
@@ -470,16 +578,79 @@ def create_statement_entry(conditions, type):
                         principal[principal_origin].append(cond['value'][idx+1:])
                 else:
                     principal[principal_origin] = cond['value'][idx+1:]
-                print(principal)
+                #print(principal)
             else:
-                principal = cond['value']
+                principal = cond['value']'''
 
-        resp = principal
+        if principal_count > 1 or principal_account_count > 1:
+            resource_item = "ERROR! Two principals combined by AND. Invalid Policy."
+
+        resp = principal_item
 
     elif type == 'Resource' or type == 'NotResource':
 
-        resource = ""
+        resource = {}
 
+        resource_count = 0
+
+        for cond in conditions:
+            if cond['attribute'] == 'resource_partition':
+                resource['partition'] = cond['value']
+            elif cond['attribute'] == 'resource_service':
+                resource['service'] = cond['value']
+            elif cond['attribute'] == 'resource_region':
+                resource['region'] = cond['value']
+            elif cond['attribute'] == 'resource_account':
+                resource['account'] = cond['value']
+            elif cond['attribute'] == 'resource_type':
+                resource['type'] = cond['value']
+            elif cond['attribute'] == 'resource':
+                resource['value'] = cond['value']
+                resource_count += 1
+            else:
+                print(cond) # Unexpected condition!
+
+        if 'partition' in resource or \
+            'service' in resource or \
+            'region' in resource or \
+            'account' in resource or \
+            'type' in resource:
+            arn = "arn:"
+            if 'partition' in resource:
+                arn = arn + resource['partition'] + ":"
+            else:
+                arn = arn + ":"
+            if 'service' in resource:
+                arn = arn + resource['service'] + ":"
+            else:
+                arn = arn + ":"
+            if 'region' in resource:
+                arn = arn + resource['region'] + ":"
+            else:
+                arn = arn + ":"
+            if 'account' in resource:
+                arn = arn + resource['account'] + ":"
+            else:
+                arn = arn + ":"
+            if 'type' in resource:
+                arn = arn + resource['type']
+                if 'service' in resource and resource['service'] in ['ec2','iam','s3','dynamodb']:
+                    arn = arn + "/"
+                else:
+                    arn = arn + ":"
+            if 'value' in resource:
+                arn = arn + resource['value']
+            else:
+                arn = arn + "*"
+
+            resource_item = arn
+
+        else:
+            resource_item = resource['value']
+
+        # This code handles the case where two resources comes into a single statement.
+        # This should never happen! Eg. Resource-Allow & NotResource-Deny, NotResource-Allow & Resource-Deny 
+        '''resource = ""
         for cond in conditions:
             if resource is list: # **
                 resource.append(cond['value'])
@@ -490,9 +661,12 @@ def create_statement_entry(conditions, type):
                     resource.append(tmp)
                     resource.append(cond['value'])
                 else:
-                    resource = cond['value']
+                    resource = cond['value']'''
 
-        resp = resource
+        if resource_count > 1:
+            resource_item = "ERROR! Two resources combined by AND. Invalid Policy."
+
+        resp = resource_item
 
     elif type == 'Action' or type == 'NotAction':
 

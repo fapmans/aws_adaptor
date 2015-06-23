@@ -1,21 +1,22 @@
 {
+    "format": "aws",
     "dnf_policy": {
         "and_rules": [
             {
                 "conditions": [
-                    {
-                        "attribute": "action",
-                        "description": "action=s3:PutObject",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "s3:PutObject"
-                    },
                     {
                         "attribute": "resource_service",
                         "description": "resource_service=s3",
                         "operator": "=",
                         "type": "c",
                         "value": "s3"
+                    },
+                    {
+                        "attribute": "resource_partition",
+                        "description": "resource_partition=aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "aws"
                     },
                     {
                         "attribute": "resource_type",
@@ -32,11 +33,11 @@
                         "value": "uploads/widgetco/*"
                     },
                     {
-                        "attribute": "resource_partition",
-                        "description": "resource_partition=aws",
+                        "attribute": "action",
+                        "description": "action=s3:PutObject",
                         "operator": "=",
                         "type": "c",
-                        "value": "aws"
+                        "value": "s3:PutObject"
                     }
                 ],
                 "description": "c0,c1,c2,c3,c4",
