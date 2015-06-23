@@ -132,15 +132,43 @@ def parse_resource(value, conds, rule, not_cond = False):
 
     return rule, conds
 
+def parse_principal_entry(principal_origin, val, conds, rule):
+    if principal_origin == "AWS":
+        if val[:4] != "arn:":
+            conds, rule = parse_entry("principal_account", "=", val, conds, rule)
+        else:
+            atts = parse_arn(val, "principal")
+            if 'principal_account' in atts:
+                conds, rule = parse_entry("principal_account", "=", atts['principal_account'], conds, rule)
+            if 'principal' in atts and 'principal_type' in atts:
+                if atts['principal_type'] == "user":
+                    conds, rule = parse_entry("principal_user_name", "=", atts['principal'], conds, rule)
+                elif atts['principal_type'] == "role" or atts['principal_type'] == "assumed_role":
+                    conds, rule = parse_entry("principal_role", "=", atts['principal'], conds, rule)
+    elif principal_origin == "Federated":
+        if val[:4] != "arn:":
+            conds, rule = parse_entry("principal_idp_url", "=", val, conds, rule)
+        else:
+            atts = parse_arn(val, "principal")
+            if 'principal_account' in atts:
+                conds, rule = parse_entry("principal_account", "=", atts['principal_account'], conds, rule)
+            if 'principal' in atts and 'principal_type' in atts and atts['principal_type'] == "saml-provider":
+                conds, rule = parse_entry("principal_idp_protocol", "=", "saml", conds, rule)
+                conds, rule = parse_entry("principal_idp_name", "=", atts['principal'], conds, rule)
+    elif principal_origin == "Service":
+        conds, rule = parse_entry("principal_service", "=", val, conds, rule)
+    elif principal_origin == "CanonicalUser":
+        conds, rule = parse_entry("principal_user_id", "=", val, conds, rule)
+
+    return conds, rule
+
 def parse_principal(value, conds, rule, not_cond = False):
     nt = ""
     if not_cond:
         nt = "~"
-
     if rule != "":
-        rule = rule + " & " + nt + "(" # Open Principal
-    else:
-        rule = nt + "("                # Open Principal
+        rule = rule + " & "
+    rule = rule + nt + "(" # Open Principal
 
     if type(value) is dict:
         i = 0
@@ -150,48 +178,22 @@ def parse_principal(value, conds, rule, not_cond = False):
             else:
                 rule = rule + "("    # Open Principal item
 
-            # Create Principal conditions
             if type(val) is list: # "Principal": {"AWS": ["arn:aws:iam::AWS-account-ID:user/user-name-1",  "arn:aws:iam::AWS-account-ID:user/UserName2" ]}
                 j = 0
-                for prin in val:
+                for v in val:
                     if j == 0:
                         rule = rule + "(" # Open Principal item value
                     else:
                         rule = rule + " | (" # Open Principal item value
-                    
-                    ########### Added to split ARN
-                    if prin[:4] == "arn:":
-                        atts = parse_arn(prin, "principal")
-                        k = 0
-                        for att, vv in atts.items():
-                            if k > 0:
-                                rule = rule + " & "       
-                            rule = rule + "("
-                            conds, rule = parse_entry(att, "=", principal_origin+":"+vv, conds, rule)
-                            rule = rule + ")"
-                            k += 1
-                    else:
-                        conds, rule = parse_entry("principal_account", "=", principal_origin+":"+prin, conds, rule)
-                    #########
+
+                    conds, rule = parse_principal_entry(principal_origin, v, conds, rule)
 
                     rule = rule + ")"        # Close Principal item value
                     j += 1
 
             else: # "Principal": {"AWS": "arn:aws:iam::AWS-account-ID:user/user-name"} | "Principal": {"AWS": "AWS-account-ID"}
-                ########### Added to split ARN
-                if val[:4] == "arn:":
-                    atts = parse_arn(val, "principal")
-                    k = 0
-                    for att, vv in atts.items():
-                        if k > 0:
-                            rule = rule + " & "       
-                        rule = rule + "("
-                        conds, rule = parse_entry(att, "=", principal_origin+":"+vv, conds, rule)
-                        rule = rule + ")"
-                        k += 1
-                else:
-                    conds, rule = parse_entry("principal", "=", principal_origin+":"+val, conds, rule)
-                #########
+                conds, rule = parse_principal_entry(principal_origin, val, conds, rule)
+                #conds, rule = parse_entry("principal", "=", principal_origin+":"+val, conds, rule)
 
             rule = rule + ")" # Close Principal item
             i += 1
@@ -456,134 +458,60 @@ def create_statement_entry(conditions, type):
         principal_account_count = 0
 	
         for cond in conditions:
-
-            if cond['attribute'] == 'principal_partition':
-                idx = cond['value'].find(":")
-                if idx > 0:
-                    principal['origin'] = cond['value'][:idx]
-                    principal['partition'] = cond['value'][idx+1:]
-                else: # Should NEVER happen
-                    principal['partition'] = cond['value']
-                    print("Partition with no origin")
-                     
-            elif cond['attribute'] == 'principal_service':
-                idx = cond['value'].find(":")
-                if idx > 0:
-                    principal['origin'] = cond['value'][:idx]
-                    principal['service'] = cond['value'][idx+1:]
-                else: # Should NEVER happen
-                    principal['service'] = cond['value']
-                    print("Service with no origin")
-                     
-            elif cond['attribute'] == 'principal_region':
-                idx = cond['value'].find(":")
-                if idx > 0:
-                    principal['origin'] = cond['value'][:idx]
-                    principal['region'] = cond['value'][idx+1:]
-                else: # Should NEVER happen
-                    principal['region'] = cond['value']
-                    print("Region with no origin")
-
+            if cond['attribute'] == 'principal':
+                principal['anonymous'] = cond['value']
             elif cond['attribute'] == 'principal_account':
-                idx = cond['value'].find(":")
-                if idx > 0:
-                    principal['origin'] = cond['value'][:idx]
-                    principal['account'] = cond['value'][idx+1:]
-                else: # Should NEVER happen
-                    principal['account'] = cond['value']
-                    print("Account with no origin")
-                principal_account_count += 1
-
-            elif cond['attribute'] == 'principal_type':
-                idx = cond['value'].find(":")
-                if idx > 0:
-                    principal['origin'] = cond['value'][:idx]
-                    principal['type'] = cond['value'][idx+1:]
-                else: # Should NEVER happen
-                    principal['type'] = cond['value']
-                    print("Type with no origin")
-
-            elif cond['attribute'] == 'principal':
-                idx = cond['value'].find(":")
-                if idx > 0:
-                    principal['origin'] = cond['value'][:idx]
-                    principal['value'] = cond['value'][idx+1:]
-                else: # *
-                    principal['value'] = cond['value']
-                principal_count += 1
-            else:
-                print(cond) # Unexpected condition!
+                principal['account'] = cond['value']
+            elif cond['attribute'] == 'principal_user_name':
+                principal['user_name'] = cond['value']
+            elif cond['attribute'] == 'principal_role':
+                principal['role'] = cond['value']
+            elif cond['attribute'] == 'principal_idp_name':
+                principal['idp_name'] = cond['value']
+            elif cond['attribute'] == 'principal_idp_protocol':
+                principal['idp_protocol'] = cond['value']
+            elif cond['attribute'] == 'principal_idp_url':
+                principal['idp_url'] = cond['value']
+            elif cond['attribute'] == 'principal_service':
+                principal['service'] = cond['value']
+            elif cond['attribute'] == 'principal_user_id':
+                principal['user_id'] = cond['value']
 
         principal_item = {}
 
-        if 'origin' in principal:
+        principal_count = 0
 
-            if 'partition' in principal or \
-                'service' in principal or \
-                'region' in principal or \
-                'account' in principal or \
-                'type' in principal:
-                arn = "arn:"
-                if 'partition' in principal:
-                    arn = arn + principal['partition'] + ":"
-                else:
-                    arn = arn + ":"
-                if 'service' in principal:
-                    arn = arn + principal['service'] + ":"
-                else:
-                    arn = arn + ":"
-                if 'region' in principal:
-                    arn = arn + principal['region'] + ":"
-                else:
-                    arn = arn + ":"
-                if 'account' in principal:
-                    arn = arn + principal['account'] + ":"
-                else:
-                    arn = arn + ":"
-                if 'type' in principal:
-                    arn = arn + principal['account'] + ":"
-                    if 'service' in principal and principal['service'] in ['ec2','iam','s3','dynamodb']:
-                        arn = arn + "/"
-                    else:
-                        arn = arn + ":"
-                if 'value' in principal:
-                    arn = arn + principal['value']
-                else:
-                    arn = arn + "*"
-
-            else: # "AWS": "{not_arn}"
-                arn = principal['value']
-
-            principal_item[principal['origin']] = arn
-
-        else: # *
-            arn = principal['value']
-            principal_item = arn
-
-        # This code handles the case where two principals comes into a single statement.
-        # This should never happen! Eg. Principal-Allow & NotPrincipal-Deny, NotPrincipal-Allow & Principal-Deny 
-        '''for cond in conditions:
-            idx = cond['value'].find(":")
-            #print(cond)
-            #print(idx)
-            if idx > 0:
-                principal_origin = cond['value'][:idx]
-                if principal_origin in principal:
-                    if principal[principal_origin] is list: # **
-                        principal[principal_origin].append(cond['value'][idx+1:])
-                    else:
-                        tmp = principal[principal_origin]
-                        principal[principal_origin] = []
-                        principal[principal_origin].append(tmp)
-                        principal[principal_origin].append(cond['value'][idx+1:])
-                else:
-                    principal[principal_origin] = cond['value'][idx+1:]
-                #print(principal)
+        if 'anonymous' in principal:
+            principal_item = principal['anonymous']
+            principal_count += 1
+        if 'account' in principal and 'user_name' in principal:
+            principal_item['AWS'] = "arn:aws:iam::" + principal['account'] + ":user/" + principal['user_name']
+            principal_count += 1
+        if 'account' in principal and 'role' in principal:
+            if principal['role'].find("/") < 0:
+                principal_item['AWS'] = "arn:aws:iam::" + principal['account'] + ":role/" + principal['role']
             else:
-                principal = cond['value']'''
+                principal_item['AWS'] = "arn:aws:sts::" + principal['account'] + ":assumed_role/" + principal['role']
+            principal_count += 1
+        if 'idp_url' in principal:
+            principal_item['Federated'] = principal['idp_url']
+            principal_count += 1
+        if 'account' in principal and 'idp_name' in principal and 'idp_protocol' in principal:
+            if principal['idp_protocol'] == "saml":
+                principal_item['Federated'] = "arn:aws:iam::" + principal['account'] + ":saml-provider/" + principal['idp_name']
+                principal_count += 1
+        if 'service' in principal:
+            principal_item['Service'] = principal['service']
+            principal_count += 1
+        if 'user_id' in principal:
+            principal_item['CanonicalUser'] = principal['user_id']
+            principal_count += 1
+        if 'account' in principal and not ('user_name' in principal or 'role' in principal or 'idp_name' in principal):
+            principal_item['AWS'] = principal['account']
+            principal_count += 1
 
-        if principal_count > 1 or principal_account_count > 1:
-            resource_item = "ERROR! Two principals combined by AND. Invalid Policy."
+        if principal_count > 1:
+            principal_item = "ERROR! More than one principals combined by AND. Invalid Policy."
 
         resp = principal_item
 

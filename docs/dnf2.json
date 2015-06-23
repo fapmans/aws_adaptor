@@ -5,18 +5,25 @@
             {
                 "conditions": [
                     {
-                        "attribute": "resource",
-                        "description": "resource=i-1a2b3c4d",
-                        "operator": "=",
+                        "attribute": "aws:CurrentTime",
+                        "description": "aws:CurrentTimeDateLessThan2013-08-16T15:00:00Z",
+                        "operator": "DateLessThan",
                         "type": "c",
-                        "value": "i-1a2b3c4d"
+                        "value": "2013-08-16T15:00:00Z"
                     },
                     {
-                        "attribute": "resource_region",
-                        "description": "resource_region=us-east-1",
-                        "operator": "=",
+                        "attribute": "aws:SourceIp",
+                        "description": "aws:SourceIpIpAddress192.0.2.0/24",
+                        "operator": "IpAddress",
                         "type": "c",
-                        "value": "us-east-1"
+                        "value": "192.0.2.0/24"
+                    },
+                    {
+                        "attribute": "aws:CurrentTime",
+                        "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
+                        "operator": "DateGreaterThan",
+                        "type": "c",
+                        "value": "2013-12-15T12:00:00Z"
                     },
                     {
                         "attribute": "resource_partition",
@@ -33,11 +40,11 @@
                         "value": "ec2"
                     },
                     {
-                        "attribute": "resource_account",
-                        "description": "resource_account=123456789023",
+                        "attribute": "resource",
+                        "description": "resource=i-1a2b3c4d",
                         "operator": "=",
                         "type": "c",
-                        "value": "123456789023"
+                        "value": "i-1a2b3c4d"
                     },
                     {
                         "attribute": "resource_type",
@@ -45,6 +52,345 @@
                         "operator": "=",
                         "type": "c",
                         "value": "instance"
+                    },
+                    {
+                        "attribute": "resource_account",
+                        "description": "resource_account=123456789023",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456789023"
+                    },
+                    {
+                        "attribute": "resource_region",
+                        "description": "resource_region=us-east-1",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "us-east-1"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action!=ec2:*",
+                        "operator": "!=",
+                        "type": "w",
+                        "value": "ec2:*"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action!=s3:*",
+                        "operator": "!=",
+                        "type": "w",
+                        "value": "s3:*"
+                    }
+                ],
+                "description": "(c0,c1,c3,c4,c5,c6,c7,c8,c9,~c11,~c12)0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "aws:CurrentTime",
+                        "description": "aws:CurrentTimeDateLessThan2013-08-16T15:00:00Z",
+                        "operator": "DateLessThan",
+                        "type": "c",
+                        "value": "2013-08-16T15:00:00Z"
+                    },
+                    {
+                        "attribute": "aws:SourceIp",
+                        "description": "aws:SourceIpIpAddress203.0.113.0/24",
+                        "operator": "IpAddress",
+                        "type": "c",
+                        "value": "203.0.113.0/24"
+                    },
+                    {
+                        "attribute": "aws:CurrentTime",
+                        "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
+                        "operator": "DateGreaterThan",
+                        "type": "c",
+                        "value": "2013-12-15T12:00:00Z"
+                    },
+                    {
+                        "attribute": "resource_partition",
+                        "description": "resource_partition=aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "aws"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource",
+                        "description": "resource=i-1a2b3c4d",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "i-1a2b3c4d"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=instance",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": "resource_account",
+                        "description": "resource_account=123456789023",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456789023"
+                    },
+                    {
+                        "attribute": "resource_region",
+                        "description": "resource_region=us-east-1",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "us-east-1"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action!=ec2:*",
+                        "operator": "!=",
+                        "type": "w",
+                        "value": "ec2:*"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action!=s3:*",
+                        "operator": "!=",
+                        "type": "w",
+                        "value": "s3:*"
+                    }
+                ],
+                "description": "(c0,c2,c3,c4,c5,c6,c7,c8,c9,~c11,~c12)1",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "aws:CurrentTime",
+                        "description": "aws:CurrentTimeDateLessThan2013-08-16T15:00:00Z",
+                        "operator": "DateLessThan",
+                        "type": "c",
+                        "value": "2013-08-16T15:00:00Z"
+                    },
+                    {
+                        "attribute": "aws:SourceIp",
+                        "description": "aws:SourceIpIpAddress192.0.2.0/24",
+                        "operator": "IpAddress",
+                        "type": "c",
+                        "value": "192.0.2.0/24"
+                    },
+                    {
+                        "attribute": "aws:CurrentTime",
+                        "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
+                        "operator": "DateGreaterThan",
+                        "type": "c",
+                        "value": "2013-12-15T12:00:00Z"
+                    },
+                    {
+                        "attribute": "resource_partition",
+                        "description": "resource_partition=aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "aws"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=instance",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": "resource_account",
+                        "description": "resource_account=123456789023",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456789023"
+                    },
+                    {
+                        "attribute": "resource_region",
+                        "description": "resource_region=us-east-1",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "us-east-1"
+                    },
+                    {
+                        "attribute": "resource",
+                        "description": "resource=i-1a2b3c4e",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "i-1a2b3c4e"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action!=ec2:*",
+                        "operator": "!=",
+                        "type": "w",
+                        "value": "ec2:*"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action!=s3:*",
+                        "operator": "!=",
+                        "type": "w",
+                        "value": "s3:*"
+                    }
+                ],
+                "description": "(c0,c1,c3,c4,c5,c7,c8,c9,c10,~c11,~c12)2",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "aws:CurrentTime",
+                        "description": "aws:CurrentTimeDateLessThan2013-08-16T15:00:00Z",
+                        "operator": "DateLessThan",
+                        "type": "c",
+                        "value": "2013-08-16T15:00:00Z"
+                    },
+                    {
+                        "attribute": "aws:SourceIp",
+                        "description": "aws:SourceIpIpAddress203.0.113.0/24",
+                        "operator": "IpAddress",
+                        "type": "c",
+                        "value": "203.0.113.0/24"
+                    },
+                    {
+                        "attribute": "aws:CurrentTime",
+                        "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
+                        "operator": "DateGreaterThan",
+                        "type": "c",
+                        "value": "2013-12-15T12:00:00Z"
+                    },
+                    {
+                        "attribute": "resource_partition",
+                        "description": "resource_partition=aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "aws"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=instance",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": "resource_account",
+                        "description": "resource_account=123456789023",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456789023"
+                    },
+                    {
+                        "attribute": "resource_region",
+                        "description": "resource_region=us-east-1",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "us-east-1"
+                    },
+                    {
+                        "attribute": "resource",
+                        "description": "resource=i-1a2b3c4e",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "i-1a2b3c4e"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action!=ec2:*",
+                        "operator": "!=",
+                        "type": "w",
+                        "value": "ec2:*"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action!=s3:*",
+                        "operator": "!=",
+                        "type": "w",
+                        "value": "s3:*"
+                    }
+                ],
+                "description": "(c0,c2,c3,c4,c5,c7,c8,c9,c10,~c11,~c12)3",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "aws:CurrentTime",
+                        "description": "aws:CurrentTimeDateLessThan2013-08-16T15:00:00Z",
+                        "operator": "DateLessThan",
+                        "type": "c",
+                        "value": "2013-08-16T15:00:00Z"
+                    },
+                    {
+                        "attribute": "aws:SourceIp",
+                        "description": "aws:SourceIpIpAddress192.0.2.0/24",
+                        "operator": "IpAddress",
+                        "type": "c",
+                        "value": "192.0.2.0/24"
+                    },
+                    {
+                        "attribute": "aws:CurrentTime",
+                        "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
+                        "operator": "DateGreaterThan",
+                        "type": "c",
+                        "value": "2013-12-15T12:00:00Z"
+                    },
+                    {
+                        "attribute": "resource_partition",
+                        "description": "resource_partition=aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "aws"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource",
+                        "description": "resource=i-1a2b3c4d",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "i-1a2b3c4d"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=instance",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": "resource_account",
+                        "description": "resource_account=123456789023",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456789023"
                     },
                     {
                         "attribute": "action",
@@ -61,12 +407,18 @@
                         "value": "s3:*"
                     },
                     {
-                        "attribute": "aws:SourceIp",
-                        "description": "aws:SourceIpIpAddress192.0.2.0/24",
-                        "operator": "IpAddress",
+                        "attribute": "resource_region",
+                        "description": "resource_region=us-west-1",
+                        "operator": "=",
                         "type": "c",
-                        "value": "192.0.2.0/24"
-                    },
+                        "value": "us-west-1"
+                    }
+                ],
+                "description": "(c0,c1,c3,c4,c5,c6,c7,c8,~c11,~c12,c13)4",
+                "enabled": true
+            },
+            {
+                "conditions": [
                     {
                         "attribute": "aws:CurrentTime",
                         "description": "aws:CurrentTimeDateLessThan2013-08-16T15:00:00Z",
@@ -75,24 +427,18 @@
                         "value": "2013-08-16T15:00:00Z"
                     },
                     {
+                        "attribute": "aws:SourceIp",
+                        "description": "aws:SourceIpIpAddress203.0.113.0/24",
+                        "operator": "IpAddress",
+                        "type": "c",
+                        "value": "203.0.113.0/24"
+                    },
+                    {
                         "attribute": "aws:CurrentTime",
                         "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
                         "operator": "DateGreaterThan",
                         "type": "c",
                         "value": "2013-12-15T12:00:00Z"
-                    }
-                ],
-                "description": "(c0,c1,c2,c3,c4,c5,~c7,~c8,c9,c11,c12)0",
-                "enabled": true
-            },
-            {
-                "conditions": [
-                    {
-                        "attribute": "resource_region",
-                        "description": "resource_region=us-east-1",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "us-east-1"
                     },
                     {
                         "attribute": "resource_partition",
@@ -109,11 +455,11 @@
                         "value": "ec2"
                     },
                     {
-                        "attribute": "resource_account",
-                        "description": "resource_account=123456789023",
+                        "attribute": "resource",
+                        "description": "resource=i-1a2b3c4d",
                         "operator": "=",
                         "type": "c",
-                        "value": "123456789023"
+                        "value": "i-1a2b3c4d"
                     },
                     {
                         "attribute": "resource_type",
@@ -121,6 +467,89 @@
                         "operator": "=",
                         "type": "c",
                         "value": "instance"
+                    },
+                    {
+                        "attribute": "resource_account",
+                        "description": "resource_account=123456789023",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456789023"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action!=ec2:*",
+                        "operator": "!=",
+                        "type": "w",
+                        "value": "ec2:*"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action!=s3:*",
+                        "operator": "!=",
+                        "type": "w",
+                        "value": "s3:*"
+                    },
+                    {
+                        "attribute": "resource_region",
+                        "description": "resource_region=us-west-1",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "us-west-1"
+                    }
+                ],
+                "description": "(c0,c2,c3,c4,c5,c6,c7,c8,~c11,~c12,c13)5",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "aws:CurrentTime",
+                        "description": "aws:CurrentTimeDateLessThan2013-08-16T15:00:00Z",
+                        "operator": "DateLessThan",
+                        "type": "c",
+                        "value": "2013-08-16T15:00:00Z"
+                    },
+                    {
+                        "attribute": "aws:SourceIp",
+                        "description": "aws:SourceIpIpAddress192.0.2.0/24",
+                        "operator": "IpAddress",
+                        "type": "c",
+                        "value": "192.0.2.0/24"
+                    },
+                    {
+                        "attribute": "aws:CurrentTime",
+                        "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
+                        "operator": "DateGreaterThan",
+                        "type": "c",
+                        "value": "2013-12-15T12:00:00Z"
+                    },
+                    {
+                        "attribute": "resource_partition",
+                        "description": "resource_partition=aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "aws"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=instance",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": "resource_account",
+                        "description": "resource_account=123456789023",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456789023"
                     },
                     {
                         "attribute": "resource",
@@ -144,87 +573,24 @@
                         "value": "s3:*"
                     },
                     {
-                        "attribute": "aws:SourceIp",
-                        "description": "aws:SourceIpIpAddress192.0.2.0/24",
-                        "operator": "IpAddress",
+                        "attribute": "resource_region",
+                        "description": "resource_region=us-west-1",
+                        "operator": "=",
                         "type": "c",
-                        "value": "192.0.2.0/24"
-                    },
+                        "value": "us-west-1"
+                    }
+                ],
+                "description": "(c0,c1,c3,c4,c5,c7,c8,c10,~c11,~c12,c13)6",
+                "enabled": true
+            },
+            {
+                "conditions": [
                     {
                         "attribute": "aws:CurrentTime",
                         "description": "aws:CurrentTimeDateLessThan2013-08-16T15:00:00Z",
                         "operator": "DateLessThan",
                         "type": "c",
                         "value": "2013-08-16T15:00:00Z"
-                    },
-                    {
-                        "attribute": "aws:CurrentTime",
-                        "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
-                        "operator": "DateGreaterThan",
-                        "type": "c",
-                        "value": "2013-12-15T12:00:00Z"
-                    }
-                ],
-                "description": "(c1,c2,c3,c4,c5,c6,~c7,~c8,c9,c11,c12)1",
-                "enabled": true
-            },
-            {
-                "conditions": [
-                    {
-                        "attribute": "resource",
-                        "description": "resource=i-1a2b3c4d",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "i-1a2b3c4d"
-                    },
-                    {
-                        "attribute": "resource_region",
-                        "description": "resource_region=us-east-1",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "us-east-1"
-                    },
-                    {
-                        "attribute": "resource_partition",
-                        "description": "resource_partition=aws",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "aws"
-                    },
-                    {
-                        "attribute": "resource_service",
-                        "description": "resource_service=ec2",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "ec2"
-                    },
-                    {
-                        "attribute": "resource_account",
-                        "description": "resource_account=123456789023",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "123456789023"
-                    },
-                    {
-                        "attribute": "resource_type",
-                        "description": "resource_type=instance",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "instance"
-                    },
-                    {
-                        "attribute": "action",
-                        "description": "action!=ec2:*",
-                        "operator": "!=",
-                        "type": "w",
-                        "value": "ec2:*"
-                    },
-                    {
-                        "attribute": "action",
-                        "description": "action!=s3:*",
-                        "operator": "!=",
-                        "type": "w",
-                        "value": "s3:*"
                     },
                     {
                         "attribute": "aws:SourceIp",
@@ -235,30 +601,10 @@
                     },
                     {
                         "attribute": "aws:CurrentTime",
-                        "description": "aws:CurrentTimeDateLessThan2013-08-16T15:00:00Z",
-                        "operator": "DateLessThan",
-                        "type": "c",
-                        "value": "2013-08-16T15:00:00Z"
-                    },
-                    {
-                        "attribute": "aws:CurrentTime",
                         "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
                         "operator": "DateGreaterThan",
                         "type": "c",
                         "value": "2013-12-15T12:00:00Z"
-                    }
-                ],
-                "description": "(c0,c1,c2,c3,c4,c5,~c7,~c8,c10,c11,c12)2",
-                "enabled": true
-            },
-            {
-                "conditions": [
-                    {
-                        "attribute": "resource_region",
-                        "description": "resource_region=us-east-1",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "us-east-1"
                     },
                     {
                         "attribute": "resource_partition",
@@ -275,18 +621,18 @@
                         "value": "ec2"
                     },
                     {
-                        "attribute": "resource_account",
-                        "description": "resource_account=123456789023",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "123456789023"
-                    },
-                    {
                         "attribute": "resource_type",
                         "description": "resource_type=instance",
                         "operator": "=",
                         "type": "c",
                         "value": "instance"
+                    },
+                    {
+                        "attribute": "resource_account",
+                        "description": "resource_account=123456789023",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456789023"
                     },
                     {
                         "attribute": "resource",
@@ -310,103 +656,6 @@
                         "value": "s3:*"
                     },
                     {
-                        "attribute": "aws:SourceIp",
-                        "description": "aws:SourceIpIpAddress203.0.113.0/24",
-                        "operator": "IpAddress",
-                        "type": "c",
-                        "value": "203.0.113.0/24"
-                    },
-                    {
-                        "attribute": "aws:CurrentTime",
-                        "description": "aws:CurrentTimeDateLessThan2013-08-16T15:00:00Z",
-                        "operator": "DateLessThan",
-                        "type": "c",
-                        "value": "2013-08-16T15:00:00Z"
-                    },
-                    {
-                        "attribute": "aws:CurrentTime",
-                        "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
-                        "operator": "DateGreaterThan",
-                        "type": "c",
-                        "value": "2013-12-15T12:00:00Z"
-                    }
-                ],
-                "description": "(c1,c2,c3,c4,c5,c6,~c7,~c8,c10,c11,c12)3",
-                "enabled": true
-            },
-            {
-                "conditions": [
-                    {
-                        "attribute": "resource",
-                        "description": "resource=i-1a2b3c4d",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "i-1a2b3c4d"
-                    },
-                    {
-                        "attribute": "resource_partition",
-                        "description": "resource_partition=aws",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "aws"
-                    },
-                    {
-                        "attribute": "resource_service",
-                        "description": "resource_service=ec2",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "ec2"
-                    },
-                    {
-                        "attribute": "resource_account",
-                        "description": "resource_account=123456789023",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "123456789023"
-                    },
-                    {
-                        "attribute": "resource_type",
-                        "description": "resource_type=instance",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "instance"
-                    },
-                    {
-                        "attribute": "action",
-                        "description": "action!=ec2:*",
-                        "operator": "!=",
-                        "type": "w",
-                        "value": "ec2:*"
-                    },
-                    {
-                        "attribute": "action",
-                        "description": "action!=s3:*",
-                        "operator": "!=",
-                        "type": "w",
-                        "value": "s3:*"
-                    },
-                    {
-                        "attribute": "aws:SourceIp",
-                        "description": "aws:SourceIpIpAddress192.0.2.0/24",
-                        "operator": "IpAddress",
-                        "type": "c",
-                        "value": "192.0.2.0/24"
-                    },
-                    {
-                        "attribute": "aws:CurrentTime",
-                        "description": "aws:CurrentTimeDateLessThan2013-08-16T15:00:00Z",
-                        "operator": "DateLessThan",
-                        "type": "c",
-                        "value": "2013-08-16T15:00:00Z"
-                    },
-                    {
-                        "attribute": "aws:CurrentTime",
-                        "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
-                        "operator": "DateGreaterThan",
-                        "type": "c",
-                        "value": "2013-12-15T12:00:00Z"
-                    },
-                    {
                         "attribute": "resource_region",
                         "description": "resource_region=us-west-1",
                         "operator": "=",
@@ -414,256 +663,7 @@
                         "value": "us-west-1"
                     }
                 ],
-                "description": "(c0,c2,c3,c4,c5,~c7,~c8,c9,c11,c12,c13)4",
-                "enabled": true
-            },
-            {
-                "conditions": [
-                    {
-                        "attribute": "resource_partition",
-                        "description": "resource_partition=aws",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "aws"
-                    },
-                    {
-                        "attribute": "resource_service",
-                        "description": "resource_service=ec2",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "ec2"
-                    },
-                    {
-                        "attribute": "resource_account",
-                        "description": "resource_account=123456789023",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "123456789023"
-                    },
-                    {
-                        "attribute": "resource_type",
-                        "description": "resource_type=instance",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "instance"
-                    },
-                    {
-                        "attribute": "resource",
-                        "description": "resource=i-1a2b3c4e",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "i-1a2b3c4e"
-                    },
-                    {
-                        "attribute": "action",
-                        "description": "action!=ec2:*",
-                        "operator": "!=",
-                        "type": "w",
-                        "value": "ec2:*"
-                    },
-                    {
-                        "attribute": "action",
-                        "description": "action!=s3:*",
-                        "operator": "!=",
-                        "type": "w",
-                        "value": "s3:*"
-                    },
-                    {
-                        "attribute": "aws:SourceIp",
-                        "description": "aws:SourceIpIpAddress192.0.2.0/24",
-                        "operator": "IpAddress",
-                        "type": "c",
-                        "value": "192.0.2.0/24"
-                    },
-                    {
-                        "attribute": "aws:CurrentTime",
-                        "description": "aws:CurrentTimeDateLessThan2013-08-16T15:00:00Z",
-                        "operator": "DateLessThan",
-                        "type": "c",
-                        "value": "2013-08-16T15:00:00Z"
-                    },
-                    {
-                        "attribute": "aws:CurrentTime",
-                        "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
-                        "operator": "DateGreaterThan",
-                        "type": "c",
-                        "value": "2013-12-15T12:00:00Z"
-                    },
-                    {
-                        "attribute": "resource_region",
-                        "description": "resource_region=us-west-1",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "us-west-1"
-                    }
-                ],
-                "description": "(c2,c3,c4,c5,c6,~c7,~c8,c9,c11,c12,c13)5",
-                "enabled": true
-            },
-            {
-                "conditions": [
-                    {
-                        "attribute": "resource",
-                        "description": "resource=i-1a2b3c4d",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "i-1a2b3c4d"
-                    },
-                    {
-                        "attribute": "resource_partition",
-                        "description": "resource_partition=aws",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "aws"
-                    },
-                    {
-                        "attribute": "resource_service",
-                        "description": "resource_service=ec2",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "ec2"
-                    },
-                    {
-                        "attribute": "resource_account",
-                        "description": "resource_account=123456789023",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "123456789023"
-                    },
-                    {
-                        "attribute": "resource_type",
-                        "description": "resource_type=instance",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "instance"
-                    },
-                    {
-                        "attribute": "action",
-                        "description": "action!=ec2:*",
-                        "operator": "!=",
-                        "type": "w",
-                        "value": "ec2:*"
-                    },
-                    {
-                        "attribute": "action",
-                        "description": "action!=s3:*",
-                        "operator": "!=",
-                        "type": "w",
-                        "value": "s3:*"
-                    },
-                    {
-                        "attribute": "aws:SourceIp",
-                        "description": "aws:SourceIpIpAddress203.0.113.0/24",
-                        "operator": "IpAddress",
-                        "type": "c",
-                        "value": "203.0.113.0/24"
-                    },
-                    {
-                        "attribute": "aws:CurrentTime",
-                        "description": "aws:CurrentTimeDateLessThan2013-08-16T15:00:00Z",
-                        "operator": "DateLessThan",
-                        "type": "c",
-                        "value": "2013-08-16T15:00:00Z"
-                    },
-                    {
-                        "attribute": "aws:CurrentTime",
-                        "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
-                        "operator": "DateGreaterThan",
-                        "type": "c",
-                        "value": "2013-12-15T12:00:00Z"
-                    },
-                    {
-                        "attribute": "resource_region",
-                        "description": "resource_region=us-west-1",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "us-west-1"
-                    }
-                ],
-                "description": "(c0,c2,c3,c4,c5,~c7,~c8,c10,c11,c12,c13)6",
-                "enabled": true
-            },
-            {
-                "conditions": [
-                    {
-                        "attribute": "resource_partition",
-                        "description": "resource_partition=aws",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "aws"
-                    },
-                    {
-                        "attribute": "resource_service",
-                        "description": "resource_service=ec2",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "ec2"
-                    },
-                    {
-                        "attribute": "resource_account",
-                        "description": "resource_account=123456789023",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "123456789023"
-                    },
-                    {
-                        "attribute": "resource_type",
-                        "description": "resource_type=instance",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "instance"
-                    },
-                    {
-                        "attribute": "resource",
-                        "description": "resource=i-1a2b3c4e",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "i-1a2b3c4e"
-                    },
-                    {
-                        "attribute": "action",
-                        "description": "action!=ec2:*",
-                        "operator": "!=",
-                        "type": "w",
-                        "value": "ec2:*"
-                    },
-                    {
-                        "attribute": "action",
-                        "description": "action!=s3:*",
-                        "operator": "!=",
-                        "type": "w",
-                        "value": "s3:*"
-                    },
-                    {
-                        "attribute": "aws:SourceIp",
-                        "description": "aws:SourceIpIpAddress203.0.113.0/24",
-                        "operator": "IpAddress",
-                        "type": "c",
-                        "value": "203.0.113.0/24"
-                    },
-                    {
-                        "attribute": "aws:CurrentTime",
-                        "description": "aws:CurrentTimeDateLessThan2013-08-16T15:00:00Z",
-                        "operator": "DateLessThan",
-                        "type": "c",
-                        "value": "2013-08-16T15:00:00Z"
-                    },
-                    {
-                        "attribute": "aws:CurrentTime",
-                        "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
-                        "operator": "DateGreaterThan",
-                        "type": "c",
-                        "value": "2013-12-15T12:00:00Z"
-                    },
-                    {
-                        "attribute": "resource_region",
-                        "description": "resource_region=us-west-1",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "us-west-1"
-                    }
-                ],
-                "description": "(c2,c3,c4,c5,c6,~c7,~c8,c10,c11,c12,c13)7",
+                "description": "(c0,c2,c3,c4,c5,c7,c8,c10,~c11,~c12,c13)7",
                 "enabled": true
             }
         ]

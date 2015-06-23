@@ -5,11 +5,11 @@
             {
                 "conditions": [
                     {
-                        "attribute": "resource_service",
-                        "description": "resource_service=s3",
+                        "attribute": "resource_type",
+                        "description": "resource_type=my_corporate_bucket",
                         "operator": "=",
                         "type": "c",
-                        "value": "s3"
+                        "value": "my_corporate_bucket"
                     },
                     {
                         "attribute": "resource_partition",
@@ -19,11 +19,11 @@
                         "value": "aws"
                     },
                     {
-                        "attribute": "resource_type",
-                        "description": "resource_type=my_corporate_bucket",
+                        "attribute": "resource_service",
+                        "description": "resource_service=s3",
                         "operator": "=",
                         "type": "c",
-                        "value": "my_corporate_bucket"
+                        "value": "s3"
                     },
                     {
                         "attribute": "resource",
