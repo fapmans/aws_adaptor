@@ -39,31 +39,6 @@ def parse_entry(att, op, val, conds, rule):
     
     return conds, rule
 
-def parse_action(value, conds, rule, not_cond = False):
-    nt = ""
-    if not_cond:
-        nt = "~"
-
-    if rule != "":
-        rule = rule + " & " + nt + "("  # Open ACTION
-    else:
-        rule = nt + "("                 # Open ACTION
-
-    if type(value) is list:
-        i = 0
-        for v in value:
-            if i > 0:
-                rule = rule + " | "
-            conds, rule = parse_entry("action", "=", v, conds, rule)
-            i = i + 1
-
-    else:
-        conds, rule = parse_entry("action", "=", value, conds, rule)
-
-    rule = rule + ")" # Closes ACTION
-
-    return rule, conds
-
 def parse_arn(value, type):
 
     resp = {}
@@ -99,11 +74,11 @@ def parse_arn(value, type):
             else:
                 resp[type+'_type'] = v[:idx2]
                 resp[type] = v[idx2+1:]
-                resp[type+'_connector'] = "/"
+#                resp[type+'_connector'] = "/"
         else:
             resp[type+'_type'] = v[:idx]
             resp[type] = v[idx+1:]
-            resp[type+'_connector'] = ":"
+#            resp[type+'_connector'] = ":"
                 
     return resp
 
@@ -111,25 +86,51 @@ def parse_resource(value, conds, rule, not_cond = False):
     nt = ""
     if not_cond:
         nt = "~"
-
     if rule != "":
-        rule = rule + " & " + nt + "("
-    else:
-        rule = nt + "("
+        rule = rule + " & "
+    rule = rule + nt + "(" #&1(
 
     if type(value) is list:
         i = 0
         for v in value:
             if i > 0:
                 rule = rule + " | "
-            rule = rule + "("
-            conds, rule = parse_entry("resource", "=", v, conds, rule)
-            rule = rule + ")"
+            rule = rule + "(" # |(
+            ########### Added to split ARN
+            if v[:4] == "arn:":
+                atts = parse_arn(v, "resource")
+                j = 0
+                for att, val in atts.items():
+                    if j > 0:
+                        rule = rule + " & "       
+                    rule = rule + "(" # &(
+                    conds, rule = parse_entry(att, "=", val, conds, rule)
+                    rule = rule + ")" # &)
+                    j += 1
+            else:
+                conds, rule = parse_entry("resource", "=", v, conds, rule) # "Resource": "*"
+            #########
+            rule = rule + ")" # |)
             i += 1
     else:
-        conds, rule = parse_entry("resource", "=", value, conds, rule)
+        ########### Added to split ARN
+        if value[:4] == "arn:":
+            atts = parse_arn(value, "resource")
+            j = 0
+            for att, val in atts.items():
+                if j > 0:
+                    rule = rule + " & "       
+                rule = rule + "("
+                conds, rule = parse_entry(att, "=", val, conds, rule)
+                rule = rule + ")"
+                j += 1
+        else:
+            conds, rule = parse_entry("resource", "=", value, conds, rule) # "Resource": "*"
+        #########
 
     rule = rule + ")"
+
+    print(rule)
 
     return rule, conds
 
@@ -159,14 +160,40 @@ def parse_principal(value, conds, rule, not_cond = False):
                         rule = rule + "(" # Open Principal item value
                     else:
                         rule = rule + " | (" # Open Principal item value
-
-                    conds, rule = parse_entry("principal", "=", principal_origin+":"+prin, conds, rule)
+                    
+                    ########### Added to split ARN
+                    if prin[:4] == "arn:":
+                        atts = parse_arn(prin, "principal")
+                        k = 0
+                        for att, vv in atts.items():
+                            if k > 0:
+                                rule = rule + " & "       
+                            rule = rule + "("
+                            conds, rule = parse_entry(att, "=", principal_origin+":"+vv, conds, rule)
+                            rule = rule + ")"
+                            k += 1
+                    else:
+                        conds, rule = parse_entry("principal", "=", principal_origin+":"+prin, conds, rule)
+                    #########
 
                     rule = rule + ")"        # Close Principal item value
                     j += 1
 
             else: # "Principal": {"AWS": "arn:aws:iam::AWS-account-ID:user/user-name"} | "Principal": {"AWS": "AWS-account-ID"}
-                conds, rule = parse_entry("principal", "=", principal_origin+":"+val, conds, rule)
+                ########### Added to split ARN
+                if val[:4] == "arn:":
+                    atts = parse_arn(val, "principal")
+                    k = 0
+                    for att, vv in atts.items():
+                        if k > 0:
+                            rule = rule + " & "       
+                        rule = rule + "("
+                        conds, rule = parse_entry(att, "=", principal_origin+":"+vv, conds, rule)
+                        rule = rule + ")"
+                        k += 1
+                else:
+                    conds, rule = parse_entry("principal", "=", principal_origin+":"+val, conds, rule)
+                #########
 
             rule = rule + ")" # Close Principal item
             i += 1
@@ -177,6 +204,31 @@ def parse_principal(value, conds, rule, not_cond = False):
     rule = rule + ")" # Close Principal
 
     print (rule)
+
+    return rule, conds
+
+def parse_action(value, conds, rule, not_cond = False):
+    nt = ""
+    if not_cond:
+        nt = "~"
+
+    if rule != "":
+        rule = rule + " & " + nt + "("  # Open ACTION
+    else:
+        rule = nt + "("                 # Open ACTION
+
+    if type(value) is list:
+        i = 0
+        for v in value:
+            if i > 0:
+                rule = rule + " | "
+            conds, rule = parse_entry("action", "=", v, conds, rule)
+            i = i + 1
+
+    else:
+        conds, rule = parse_entry("action", "=", value, conds, rule)
+
+    rule = rule + ")" # Closes ACTION
 
     return rule, conds
 

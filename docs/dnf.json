@@ -1,15 +1,56 @@
 {
-    "format": "aws",
     "dnf_policy": {
         "and_rules": [
             {
                 "conditions": [
                     {
-                        "attribute": "resource",
-                        "description": "resource=arn:aws:ec2:us-east-1:123456789023:instance/i-1a2b3c4d",
+                        "attribute": "aws:CurrentTime",
+                        "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
+                        "operator": "DateGreaterThan",
+                        "type": "c",
+                        "value": "2013-12-15T12:00:00Z"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=ec2",
                         "operator": "=",
                         "type": "c",
-                        "value": "arn:aws:ec2:us-east-1:123456789023:instance/i-1a2b3c4d"
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=instance",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": "resource",
+                        "description": "resource=i-1a2b3c4d",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "i-1a2b3c4d"
+                    },
+                    {
+                        "attribute": "resource_partition",
+                        "description": "resource_partition=aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "aws"
+                    },
+                    {
+                        "attribute": "resource_account",
+                        "description": "resource_account=123456789023",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456789023"
+                    },
+                    {
+                        "attribute": "resource_region",
+                        "description": "resource_region=us-east-1",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "us-east-1"
                     },
                     {
                         "attribute": "action",
@@ -24,16 +65,9 @@
                         "operator": "!=",
                         "type": "w",
                         "value": "s3:*"
-                    },
-                    {
-                        "attribute": "aws:CurrentTime",
-                        "description": "aws:CurrentTimeDateGreaterThan2013-12-15T12:00:00Z",
-                        "operator": "DateGreaterThan",
-                        "type": "c",
-                        "value": "2013-12-15T12:00:00Z"
                     }
                 ],
-                "description": "c0,~c1,~c2,c3",
+                "description": "c0,c1,c2,c3,c4,c5,c6,~c7,~c8",
                 "enabled": true
             }
         ]

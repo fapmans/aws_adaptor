@@ -1,25 +1,45 @@
 {
-    "format": "aws",
     "dnf_policy": {
         "and_rules": [
             {
                 "conditions": [
-                    {
-                        "attribute": "resource",
-                        "description": "resource=arn:aws:s3:::my_corporate_bucket/uploads/widgetco/*",
-                        "operator": "=",
-                        "type": "w",
-                        "value": "arn:aws:s3:::my_corporate_bucket/uploads/widgetco/*"
-                    },
                     {
                         "attribute": "action",
                         "description": "action=s3:PutObject",
                         "operator": "=",
                         "type": "c",
                         "value": "s3:PutObject"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=s3",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "s3"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=my_corporate_bucket",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "my_corporate_bucket"
+                    },
+                    {
+                        "attribute": "resource",
+                        "description": "resource=uploads/widgetco/*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "uploads/widgetco/*"
+                    },
+                    {
+                        "attribute": "resource_partition",
+                        "description": "resource_partition=aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "aws"
                     }
                 ],
-                "description": "c0,c1",
+                "description": "c0,c1,c2,c3,c4",
                 "enabled": true
             }
         ]

@@ -1,69 +1,28 @@
 {
-    "format": "aws",
     "dnf_policy": {
         "and_rules": [
             {
                 "conditions": [
                     {
-                        "attribute": "resource",
-                        "description": "resource=arn:aws:s3:::mybucket",
+                        "attribute": "resource_service",
+                        "description": "resource_service=s3",
                         "operator": "=",
                         "type": "c",
-                        "value": "arn:aws:s3:::mybucket"
+                        "value": "s3"
                     },
-                    {
-                        "attribute": "action",
-                        "description": "action=s3:*",
-                        "operator": "=",
-                        "type": "w",
-                        "value": "s3:*"
-                    },
-                    {
-                        "attribute": "principal",
-                        "description": "principal=AWS:arn:aws:iam::12345678012:root",
-                        "operator": "=",
-                        "type": "c",
-                        "value": "AWS:arn:aws:iam::12345678012:root"
-                    }
-                ],
-                "description": "(c0,c2,c3)0",
-                "enabled": true
-            },
-            {
-                "conditions": [
                     {
                         "attribute": "resource",
-                        "description": "resource=arn:aws:s3:::mybucket/*",
-                        "operator": "=",
-                        "type": "w",
-                        "value": "arn:aws:s3:::mybucket/*"
-                    },
-                    {
-                        "attribute": "action",
-                        "description": "action=s3:*",
-                        "operator": "=",
-                        "type": "w",
-                        "value": "s3:*"
-                    },
-                    {
-                        "attribute": "principal",
-                        "description": "principal=AWS:arn:aws:iam::12345678012:root",
+                        "description": "resource=mybucket",
                         "operator": "=",
                         "type": "c",
-                        "value": "AWS:arn:aws:iam::12345678012:root"
-                    }
-                ],
-                "description": "(c1,c2,c3)1",
-                "enabled": true
-            },
-            {
-                "conditions": [
+                        "value": "mybucket"
+                    },
                     {
-                        "attribute": "resource",
-                        "description": "resource=arn:aws:s3:::mybucket",
+                        "attribute": "resource_partition",
+                        "description": "resource_partition=aws",
                         "operator": "=",
                         "type": "c",
-                        "value": "arn:aws:s3:::mybucket"
+                        "value": "aws"
                     },
                     {
                         "attribute": "action",
@@ -80,17 +39,38 @@
                         "value": "AWS:123456789013"
                     }
                 ],
-                "description": "(c0,c2,c4)2",
+                "description": "(c0,c1,c2,c5,c10)0",
                 "enabled": true
             },
             {
                 "conditions": [
                     {
+                        "attribute": "resource_service",
+                        "description": "resource_service=s3",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "s3"
+                    },
+                    {
+                        "attribute": "resource_partition",
+                        "description": "resource_partition=aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "aws"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=mybucket",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "mybucket"
+                    },
+                    {
                         "attribute": "resource",
-                        "description": "resource=arn:aws:s3:::mybucket/*",
+                        "description": "resource=*",
                         "operator": "=",
                         "type": "w",
-                        "value": "arn:aws:s3:::mybucket/*"
+                        "value": "*"
                     },
                     {
                         "attribute": "action",
@@ -107,7 +87,138 @@
                         "value": "AWS:123456789013"
                     }
                 ],
-                "description": "(c1,c2,c4)3",
+                "description": "(c0,c2,c3,c4,c5,c10)1",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=s3",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "s3"
+                    },
+                    {
+                        "attribute": "resource",
+                        "description": "resource=mybucket",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "mybucket"
+                    },
+                    {
+                        "attribute": "resource_partition",
+                        "description": "resource_partition=aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "aws"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=s3:*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "s3:*"
+                    },
+                    {
+                        "attribute": "principal_partition",
+                        "description": "principal_partition=AWS:aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "AWS:aws"
+                    },
+                    {
+                        "attribute": "principal",
+                        "description": "principal=AWS:root",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "AWS:root"
+                    },
+                    {
+                        "attribute": "principal_service",
+                        "description": "principal_service=AWS:iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "AWS:iam"
+                    },
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=AWS:12345678012",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "AWS:12345678012"
+                    }
+                ],
+                "description": "(c0,c1,c2,c5,c6,c7,c8,c9)2",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=s3",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "s3"
+                    },
+                    {
+                        "attribute": "resource_partition",
+                        "description": "resource_partition=aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "aws"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=mybucket",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "mybucket"
+                    },
+                    {
+                        "attribute": "resource",
+                        "description": "resource=*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "*"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=s3:*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "s3:*"
+                    },
+                    {
+                        "attribute": "principal_partition",
+                        "description": "principal_partition=AWS:aws",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "AWS:aws"
+                    },
+                    {
+                        "attribute": "principal",
+                        "description": "principal=AWS:root",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "AWS:root"
+                    },
+                    {
+                        "attribute": "principal_service",
+                        "description": "principal_service=AWS:iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "AWS:iam"
+                    },
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=AWS:12345678012",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "AWS:12345678012"
+                    }
+                ],
+                "description": "(c0,c2,c3,c4,c5,c6,c7,c8,c9)3",
                 "enabled": true
             }
         ]

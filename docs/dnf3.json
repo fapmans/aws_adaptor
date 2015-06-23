@@ -1,19 +1,18 @@
 {
-    "format": "aws",
     "dnf_policy": {
         "and_rules": [
             {
                 "conditions": [
                     {
-                        "attribute": "resource",
-                        "description": "resource=*",
+                        "attribute": "action",
+                        "description": "action=*",
                         "operator": "=",
                         "type": "w",
                         "value": "*"
                     },
                     {
-                        "attribute": "action",
-                        "description": "action=*",
+                        "attribute": "resource",
+                        "description": "resource=*",
                         "operator": "=",
                         "type": "w",
                         "value": "*"
