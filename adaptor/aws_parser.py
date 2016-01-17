@@ -74,11 +74,9 @@ def parse_arn(value, type):
             else:
                 resp[type+'_type'] = v[:idx2]
                 resp[type] = v[idx2+1:]
-#                resp[type+'_connector'] = "/"
         else:
             resp[type+'_type'] = v[:idx]
             resp[type] = v[idx+1:]
-#            resp[type+'_connector'] = ":"
                 
     return resp
 
@@ -88,7 +86,7 @@ def parse_resource(value, conds, rule, not_cond = False):
         nt = "~"
     if rule != "":
         rule = rule + " & "
-    rule = rule + nt + "(" #&1(
+    rule = rule + nt + "(" # &(
 
     if type(value) is list:
         i = 0
@@ -193,7 +191,6 @@ def parse_principal(value, conds, rule, not_cond = False):
 
             else: # "Principal": {"AWS": "arn:aws:iam::AWS-account-ID:user/user-name"} | "Principal": {"AWS": "AWS-account-ID"}
                 conds, rule = parse_principal_entry(principal_origin, val, conds, rule)
-                #conds, rule = parse_entry("principal", "=", principal_origin+":"+val, conds, rule)
 
             rule = rule + ")" # Close Principal item
             i += 1
