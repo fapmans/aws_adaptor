@@ -3,6 +3,8 @@ import json
 import re
 import copy
 
+
+
 # Return the oposite operator
 def oposite_operator(operator):
     if operator == "=":
