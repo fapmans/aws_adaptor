@@ -1,12 +1,15 @@
 from adaptor import aws_parser
+from adaptor import semantic_parser
 import json
 
 def policy2dnf(policy):
     resp = {}
-    resp['dnf_policy'] = aws_parser.policy2dnf(policy)
+    dnfpol = aws_parser.policy2dnf(policy)
+    resp['dnf_policy'] = semantic_parser.semantic2ontology(dnfpol)
     return resp
 
 def policy2local(dnf_policy):
     resp = {}
-    resp['policy'] = aws_parser.policy2local(dnf_policy)
+    locpol = semantic_parser.semantic2local(dnf_policy)
+    resp['policy'] = aws_parser.policy2local(locpol)
     return resp
