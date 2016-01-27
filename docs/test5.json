@@ -1,5 +1,7 @@
 {
    "format": "aws",
+   "tenant": "UFPE",
+   "apf": "BRGB",
    "policy":
 {
    "Version":"2012-10-17",

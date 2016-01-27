@@ -219,13 +219,31 @@ def parse_action(value, conds, rule, not_cond = False):
         for v in value:
             if i > 0:
                 rule = rule + " | "
-            conds, rule = parse_entry("action", "=", v, conds, rule)
+            idx = v.find(":")
+            if idx > 0:
+                rule = rule + "(" # Open Action
+                conds, rule = parse_entry("action_service", "=", v[:idx], conds, rule)
+                rule = rule + " & "
+                conds, rule = parse_entry("action", "=", v[idx+1:], conds, rule)            
+                rule = rule + ")" # Close Action
+            else:
+                conds, rule = parse_entry("action", "=", v, conds, rule)
             i = i + 1
 
     else:
-        conds, rule = parse_entry("action", "=", value, conds, rule)
+        idx = value.find(":")
+        if idx > 0:
+            rule = rule + "(" # Open Action
+            conds, rule = parse_entry("action_service", "=", value[:idx], conds, rule)
+            rule = rule + " & "
+            conds, rule = parse_entry("action", "=", value[idx+1:], conds, rule)            
+            rule = rule + ")" # Close Action
+        else:
+            conds, rule = parse_entry("action", "=", value, conds, rule)
 
     rule = rule + ")" # Closes ACTION
+
+    # print(rule)
 
     return rule, conds
 
@@ -320,9 +338,9 @@ def parse(policy):
         elif st['Effect'] == "Deny":
             deny_rules.append(rule)
 
-    #print (conds)
-    #print (allow_rules)
-    #print (deny_rules)
+    # print (conds)
+    # print (allow_rules)
+    # print (deny_rules)
 
     # Finally, allow_rules and deny_rules are combined: Allow_rules AND NOT (Deny_rules)
     # The result is a string in terms of conditions (C1, C2, ...) to be transformed into DNF
@@ -342,7 +360,7 @@ def to_dnf(conds, rules):
     # Define expression based on subject rules and convert them to DNF
     resp = eval(rules).to_dnf()
 
-    #print(resp)
+    # print(resp)
 
     return resp
 
@@ -597,21 +615,44 @@ def create_statement_entry(conditions, type):
 
     elif type == 'Action' or type == 'NotAction':
 
-        action = ""
+        action = {}
+        action_count = 0;
 
         for cond in conditions:
-            if action is list: # **
-                action.append(cond['value'])
+            if cond['attribute'] == "action_service":
+                action['service'] = cond['value']
+            elif cond['attribute'] == "action":
+                action['name'] = cond['value']
+                action_count += 1
             else:
-                if action != "":
-                    tmp = action
-                    action = []
-                    action.append(tmp)
-                    action.append(cond['value'])
-                else:
-                    action = cond['value']
+                print(cond) # Unexpected condition!
 
-        resp = action
+        action_item = ""
+        if 'service' in action:
+            action_item = action['service']+":"
+        if 'name' in action:
+            action_item = action_item + action['name']
+        else:
+            action_item = action_item + '*'
+
+        if action_count > 1:
+            action_item = "ERROR! Two actions combined by AND. Invalid Policy."
+
+        # action = ""
+
+        # for cond in conditions:
+        #     if action is list: # **
+        #         action.append(cond['value'])
+        #     else:
+        #         if action != "":
+        #             tmp = action
+        #             action = []
+        #             action.append(tmp)
+        #             action.append(cond['value'])
+        #         else:
+        #             action = cond['value']
+
+        resp = action_item
 
     elif type == 'Condition':
 
@@ -798,7 +839,11 @@ def policy2local(dnf_policy):
 
     for statement in policy['Statement']:
         for attr, conds in statement.items():
-             statement[attr] = create_statement_entry(conds, attr)
+             print(attr)
+             print(conds)
+             tmp = create_statement_entry(conds, attr)
+             print(tmp)
+             statement[attr] = tmp
         statement['Effect'] = 'Allow'
 
     policy = remove_duplicate_entries(policy)

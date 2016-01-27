@@ -1,4 +1,7 @@
-{ "format": "aws",
+{ 
+   "format": "aws",
+   "tenant": "UFPE",
+   "apf": "BRGB",
    "policy": {
        "Statement": [
         { 
