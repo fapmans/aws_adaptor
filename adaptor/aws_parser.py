@@ -839,10 +839,10 @@ def policy2local(dnf_policy):
 
     for statement in policy['Statement']:
         for attr, conds in statement.items():
-             print(attr)
-             print(conds)
+             # print(attr)
+             # print(conds)
              tmp = create_statement_entry(conds, attr)
-             print(tmp)
+             # print(tmp)
              statement[attr] = tmp
         statement['Effect'] = 'Allow'
 
