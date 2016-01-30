@@ -159,7 +159,7 @@ def to_str(v):
 
 # Receive a value (loc/ont) and return its equivalent(s) (ont/loc)
 def map_val2(attvals, apf, tenant):
-    print(to_str(attvals))
+    # print(to_str(attvals))
     values = []
     mapped_vals = {}
 
@@ -182,7 +182,7 @@ def map_val2(attvals, apf, tenant):
                     else:
                         mapped_vals[k] = list(set(mapped_vals[k]) & set(vs))
 
-    print(to_str(mapped_vals))
+    # print(to_str(mapped_vals))
 
     mapped_vals_str = {}
 
@@ -196,14 +196,14 @@ def map_val2(attvals, apf, tenant):
             for v_map2 in value_map2:
                 v_att2 = v_map2.apf_value.attribute
                 v_val2 = v_map2.apf_value
-                print("   ",to_str(v_att2), end="")
-                print(" = ",to_str(v_val2), end="")
+                # print("   ",to_str(v_att2), end="")
+                # print(" = ",to_str(v_val2), end="")
                 if v_att2 in attvals.keys() and v_val2 in attvals[v_att2]:
                     pass
-                    print(" (True)")
+                    # print(" (True)")
                 else:
                     match = False
-                    print(" (False)")
+                    # print(" (False)")
             if match:
                 if num_vals not in candidates.keys():
                     candidates[num_vals] = []
@@ -216,7 +216,7 @@ def map_val2(attvals, apf, tenant):
             else:
                 mapped_vals[k] = []
 
-    print(to_str(mapped_vals))
+    # print(to_str(mapped_vals))
 
     for k, vs in mapped_vals.items():
         if k.name not in mapped_vals_str.keys():
@@ -549,8 +549,8 @@ def semantic2local(policy, ten, apf_nm):
 
     ars = []
     for ar in policy['and_rules']:
-        print()
-        print(ar['description'])
+        # print()
+        # print(ar['description'])
         unknown_tech = False                # If this flag is true, the AR will be jumped
         new_conds_enumerated = {}
         new_conds_infinite = {}
