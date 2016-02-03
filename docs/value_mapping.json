@@ -1,5 +1,5 @@
 {
-    "count": 90,
+    "count": 93,
     "next": null,
     "previous": null,
     "results": [
@@ -452,6 +452,21 @@
             "apf_value": 87,
             "id": 90,
             "local_value": 80
+        },
+        {
+            "apf_value": 94,
+            "id": 91,
+            "local_value": 95
+        },
+        {
+            "apf_value": 97,
+            "id": 92,
+            "local_value": 95
+        },
+        {
+            "apf_value": 94,
+            "id": 93,
+            "local_value": 98
         }
     ]
 }

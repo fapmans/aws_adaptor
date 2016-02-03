@@ -1,5 +1,5 @@
 {
-    "count": 87,
+    "count": 98,
     "next": null,
     "previous": null,
     "results": [
@@ -524,6 +524,72 @@
             "description": "VM Snapshot",
             "id": 87,
             "name": "snapshot"
+        },
+        {
+            "attribute": 23,
+            "description": "AWS user principal type",
+            "id": 88,
+            "name": "user"
+        },
+        {
+            "attribute": 23,
+            "description": "AWS role principal type",
+            "id": 89,
+            "name": "role"
+        },
+        {
+            "attribute": 24,
+            "description": "AWS principal origin",
+            "id": 90,
+            "name": "AWS"
+        },
+        {
+            "attribute": 24,
+            "description": "Federated principal origin",
+            "id": 91,
+            "name": "Federated"
+        },
+        {
+            "attribute": 24,
+            "description": "Service principal origin",
+            "id": 92,
+            "name": "Service"
+        },
+        {
+            "attribute": 24,
+            "description": "Canonical user principal origin",
+            "id": 93,
+            "name": "CanonicalUser"
+        },
+        {
+            "attribute": 10,
+            "description": "This ontology variable contains the id of the subject who owns a resource.",
+            "id": 94,
+            "name": "$(resource.owner.id)"
+        },
+        {
+            "attribute": 28,
+            "description": "user name",
+            "id": 95,
+            "name": "${aws.username}"
+        },
+        {
+            "attribute": 30,
+            "description": "user id at AWS",
+            "id": 96,
+            "name": "${aws.userid}"
+        },
+        {
+            "attribute": 10,
+            "description": "Name of the subject that owns a resource.",
+            "id": 97,
+            "name": "$(resource.owner.name)"
+        },
+        {
+            "attribute": 29,
+            "description": "AWS IAM Resource Type user",
+            "id": 98,
+            "name": "user"
         }
     ]
 }

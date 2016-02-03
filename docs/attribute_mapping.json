@@ -1,5 +1,5 @@
 {
-    "count": 9,
+    "count": 14,
     "next": null,
     "previous": null,
     "results": [
@@ -47,6 +47,31 @@
             "apf_attribute": 4,
             "id": 9,
             "local_attribute": 22
+        },
+        {
+            "apf_attribute": 10,
+            "id": 12,
+            "local_attribute": 23
+        },
+        {
+            "apf_attribute": 10,
+            "id": 13,
+            "local_attribute": 24
+        },
+        {
+            "apf_attribute": 10,
+            "id": 15,
+            "local_attribute": 29
+        },
+        {
+            "apf_attribute": 10,
+            "id": 16,
+            "local_attribute": 30
+        },
+        {
+            "apf_attribute": 10,
+            "id": 17,
+            "local_attribute": 28
         }
     ]
 }
