@@ -1,0 +1,245 @@
+{
+    "dnf_policy": {
+        "and_rules": [
+            {
+                "conditions": [
+                    {
+                        "attribute": "resource",
+                        "description": "resource=*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "*"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=DescribeInstances",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "DescribeInstances"
+                    }
+                ],
+                "description": "(c0,c1,c2)0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource",
+                        "description": "resource=i-1234567890abcdef0",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "i-1234567890abcdef0"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=instance",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=StopInstances",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "StopInstances"
+                    }
+                ],
+                "description": "(c1,c3,c4,c5,c7)1",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=instance",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": "resource",
+                        "description": "resource=i-0598c7d356eba48d7",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "i-0598c7d356eba48d7"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=StopInstances",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "StopInstances"
+                    }
+                ],
+                "description": "(c1,c3,c5,c6,c7)2",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource",
+                        "description": "resource=i-1234567890abcdef0",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "i-1234567890abcdef0"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=instance",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=StartInstances",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "StartInstances"
+                    }
+                ],
+                "description": "(c1,c3,c4,c5,c8)3",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=instance",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": "resource",
+                        "description": "resource=i-0598c7d356eba48d7",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "i-0598c7d356eba48d7"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=StartInstances",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "StartInstances"
+                    }
+                ],
+                "description": "(c1,c3,c5,c6,c8)4",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "resource",
+                        "description": "resource=*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "*"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=instance",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=TerminateInstances",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "TerminateInstances"
+                    },
+                    {
+                        "attribute": "ec2:ResourceTag/purpose",
+                        "description": "ec2:ResourceTag/purposeStringEqualstest",
+                        "operator": "StringEquals",
+                        "type": "c",
+                        "value": "test"
+                    }
+                ],
+                "description": "(c0,c1,c3,c5,c9,c10)5",
+                "enabled": true
+            }
+        ]
+    }
+}

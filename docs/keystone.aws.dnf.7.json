@@ -1,0 +1,853 @@
+{
+    "policy": {
+        "and_rules": [
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=ListUsers",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ListUsers"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:list_users:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=ListRoles",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ListRoles"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:list_roles:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=UpdateUser",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "UpdateUser"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:update_user:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=DeleteGroup",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "DeleteGroup"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:delete_group:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=CreateUser",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "CreateUser"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:create_user:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=CreateRole",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "CreateRole"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:create_role:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=ChangePassword",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ChangePassword"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:change_password:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "resource_type",
+                        "description": "resource_type=user",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "user"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=ChangePassword",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ChangePassword"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "resource",
+                        "description": "resource=${aws.username}",
+                        "operator": "=",
+                        "type": "v",
+                        "value": "${aws.username}"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:change_password:2",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=RemoveUserFromGroup",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "RemoveUserFromGroup"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:remove_user_from_group:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=GetGroup",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "GetGroup"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:get_group:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=GetUser",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "GetUser"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:get_user:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=AddUserToGroup",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "AddUserToGroup"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:add_user_to_group:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:check_user_in_group:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=CreateGroup",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "CreateGroup"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:create_group:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=UpdateGroup",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "UpdateGroup"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:update_group:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=GetRole",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "GetRole"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:get_role:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=DeleteRole",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "DeleteRole"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:delete_role:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=ListGroups",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ListGroups"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:list_groups:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=GetGroup",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "GetGroup"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:list_users_in_group:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:update_role:0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "principal_account",
+                        "description": "principal_account=123456",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "123456"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=DeleteUser",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "DeleteUser"
+                    },
+                    {
+                        "attribute": "resource_service",
+                        "description": "resource_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": "principal_role",
+                        "description": "principal_role=admin",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "admin"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=iam",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "iam"
+                    }
+                ],
+                "description": "identity:delete_user:0",
+                "enabled": true
+            }
+        ]
+    }
+}

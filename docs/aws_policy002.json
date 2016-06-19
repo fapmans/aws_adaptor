@@ -1,0 +1,38 @@
+{
+   "format": "aws",
+   "tenant": "UFPE",
+   "apf": "BRGB",
+   "policy":
+{
+   "Statement": [
+   {
+   "Effect": "Allow",
+      "Action": "ec2:DescribeInstances",
+      "Resource": "*"
+   },
+   {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:StopInstances", 
+        "ec2:StartInstances"
+      ],
+      "Resource": [
+      "arn:aws:ec2:us-east-1:123456789012:instance/i-1234567890abcdef0",
+      "arn:aws:ec2:us-east-1:123456789012:instance/i-0598c7d356eba48d7"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": "ec2:TerminateInstances",
+      "Resource": "arn:aws:ec2:us-east-1:123456789012:instance/*",
+      "Condition": {
+         "StringEquals": {
+            "ec2:ResourceTag/purpose": "test"
+         }
+      }
+   }
+
+   ]
+}
+
+}

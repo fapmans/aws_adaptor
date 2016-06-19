@@ -1,0 +1,114 @@
+{
+    "dnf_policy": {
+        "and_rules": [
+            {
+                "conditions": [
+                    {
+                        "attribute": "resource",
+                        "description": "resource=*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "*"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=DescribeInstances",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "DescribeInstances"
+                    }
+                ],
+                "description": "(c0,c1,c2)0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "resource",
+                        "description": "resource=*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "*"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=TerminateInstances",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "TerminateInstances"
+                    }
+                ],
+                "description": "(c0,c1,c3)1",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "resource",
+                        "description": "resource=*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "*"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=StopInstances",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "StopInstances"
+                    }
+                ],
+                "description": "(c0,c1,c4)2",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": "resource",
+                        "description": "resource=*",
+                        "operator": "=",
+                        "type": "w",
+                        "value": "*"
+                    },
+                    {
+                        "attribute": "action_service",
+                        "description": "action_service=ec2",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": "action",
+                        "description": "action=StartInstances",
+                        "operator": "=",
+                        "type": "c",
+                        "value": "StartInstances"
+                    }
+                ],
+                "description": "(c0,c1,c5)3",
+                "enabled": true
+            }
+        ]
+    }
+}

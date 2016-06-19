@@ -1,0 +1,6 @@
+user.id: %(user.id)
+
+user.id --> user.name (?)
+user.name --> principal_user_name, principal_user_type, principal_user_origin
+
+%(user.id) --> $(resource.owner)

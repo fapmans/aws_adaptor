@@ -1,0 +1,148 @@
+{
+    "format": "aws",
+    "dnf_policy": {
+        "and_rules": [
+            {
+                "conditions": [
+                    {
+                        "attribute": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "resource",
+                            "policy": null
+                        },
+                        "description": "resource=i-1a2b3c4d",
+                        "operator": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "="
+                        },
+                        "value": "i-1a2b3c4d"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "resource_partition",
+                            "policy": null
+                        },
+                        "description": "resource_partition=aws",
+                        "operator": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "="
+                        },
+                        "value": "aws"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "resource_type",
+                            "policy": null
+                        },
+                        "description": "resource_type=instance",
+                        "operator": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "="
+                        },
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "resource_service",
+                            "policy": null
+                        },
+                        "description": "resource_service=ec2",
+                        "operator": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "="
+                        },
+                        "value": "ec2"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "resource_account",
+                            "policy": null
+                        },
+                        "description": "resource_account=123456789023",
+                        "operator": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "="
+                        },
+                        "value": "123456789023"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "resource_region",
+                            "policy": null
+                        },
+                        "description": "resource_region=us-east-1",
+                        "operator": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "="
+                        },
+                        "value": "us-east-1"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "aws:CurrentTime",
+                            "policy": null
+                        },
+                        "description": "aws:CurrentTimeDateGreaterThan2015-12-15T12:00:00Z",
+                        "operator": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "DateGreaterThan"
+                        },
+                        "value": "2015-12-15T12:00:00Z"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "action",
+                            "policy": null
+                        },
+                        "description": "action!=ec2:*",
+                        "operator": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "!="
+                        },
+                        "value": "ec2:*"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "action",
+                            "policy": null
+                        },
+                        "description": "action!=s3:*",
+                        "operator": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "!="
+                        },
+                        "value": "s3:*"
+                    }
+                ],
+                "description": "c0,c1,c2,c3,c4,c5,c6,~c7,~c8",
+                "enabled": true
+            }
+        ]
+    }
+}

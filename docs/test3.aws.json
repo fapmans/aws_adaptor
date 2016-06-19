@@ -1,0 +1,19 @@
+{
+    "policy": [
+        {
+            "Action": "*",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action": "iam:*",
+            "Effect": "Deny",
+            "Resource": "*"
+        },
+        {
+            "Action": "sts:*",
+            "Effect": "Deny",
+            "Resource": "*"
+        }
+    ]
+}

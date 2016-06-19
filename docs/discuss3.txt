@@ -1,0 +1,17 @@
+1) ResourceType:Resource
+   ResourceType/Resource
+
+   Where to keep the : or / information:
+
+   option 1: "connector" (implemented, but weird)
+   option 2: "resource_type" = "ResourceType/" or "ResourceType1"
+   option 3: "resource" = "/Resource"
+
+2) NotAction: ["ec2:*", "s3:*"]
+
+
+  ~ ((ec2 & *) | (s3 & *))
+  ~(ec2 & *) & ~(s3 & *)
+  (~ec2 | ~*) & (~s3 | ~*)
+  (~ec2 & ~s3) | (~* & ~s3) | (~ec2 & ~*) | (~* & ~*)
+  (~ec2 & ~s3) | (~*)

@@ -1,0 +1,75 @@
+{
+    "format": "aws",
+    "tenant": "UFPE",
+    "apf": "BRGB",
+    "dnf_policy": {
+        "and_rules": [
+            {
+                "conditions": [
+                    {
+                        "attribute": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "resource",
+                            "policy": null
+                        },
+                        "description": "resource=*",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "AWS equals",
+                            "name": "="
+                        },
+                        "value": "*"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "action",
+                            "policy": null
+                        },
+                        "description": "action=*",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "AWS equals",
+                            "name": "="
+                        },
+                        "value": "*"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "action_service",
+                            "policy": null
+                        },
+                        "description": "action_service!=iam",
+                        "operator": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "!="
+                        },
+                        "value": "iam"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "action_service",
+                            "policy": null
+                        },
+                        "description": "action_service!=sts",
+                        "operator": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "!="
+                        },
+                        "value": "sts"
+                    }
+                ],
+                "description": "c0,c1,~c2,~c3",
+                "enabled": true
+            }
+        ]
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "format": "aws",
+    "apf": "BRGB",
+    "tenant": "UFPE",
+    "policy": {
+        "Statement": [
+            {
+                "Action": ["iam:ListUsers", "iam:GetUser"],
+                "Effect": "Allow",
+                "Principal": {
+                    "AWS": "arn:aws:iam::123456:role/admin"
+                },
+                "Resource": "arn::iam:::*"
+            }
+        ]
+    }
+}

@@ -1,0 +1,567 @@
+{
+    "dnf_policy": {
+        "and_rules": [
+            {
+                "conditions": [
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Identifier for users in the ontology",
+                            "name": "user.id",
+                            "policy": null
+                        },
+                        "description": "resource=*",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "*"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Service in which the Resource is contained",
+                            "name": "resource.service",
+                            "policy": null
+                        },
+                        "description": "action_service=ec2",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "compute_service"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Type of an Action",
+                            "name": "action.type",
+                            "policy": null
+                        },
+                        "description": "action=DescribeInstances",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "read"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Type of a resource",
+                            "name": "resource.type",
+                            "policy": null
+                        },
+                        "description": "action=DescribeInstances",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "virtual_machine"
+                    }
+                ],
+                "description": "(c0,c1,c2)0",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Service in which the Resource is contained",
+                            "name": "resource.service",
+                            "policy": null
+                        },
+                        "description": "action_service=ec2",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "compute_service"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Service in which the Resource is contained",
+                            "name": "resource.service",
+                            "policy": null
+                        },
+                        "description": "resource_service=ec2",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "compute_service"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Identifier for users in the ontology",
+                            "name": "user.id",
+                            "policy": null
+                        },
+                        "description": "resource=i-1234567890abcdef0",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "i-1234567890abcdef0"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Identifier for users in the ontology",
+                            "name": "user.id",
+                            "policy": null
+                        },
+                        "description": "resource_type=instance",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Type of an Action",
+                            "name": "action.type",
+                            "policy": null
+                        },
+                        "description": "action=StopInstances",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "stop"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Type of a resource",
+                            "name": "resource.type",
+                            "policy": null
+                        },
+                        "description": "action=StopInstances",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "virtual_machine"
+                    }
+                ],
+                "description": "(c1,c3,c4,c5,c7)1",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Service in which the Resource is contained",
+                            "name": "resource.service",
+                            "policy": null
+                        },
+                        "description": "action_service=ec2",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "compute_service"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Service in which the Resource is contained",
+                            "name": "resource.service",
+                            "policy": null
+                        },
+                        "description": "resource_service=ec2",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "compute_service"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Identifier for users in the ontology",
+                            "name": "user.id",
+                            "policy": null
+                        },
+                        "description": "resource_type=instance",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Identifier for users in the ontology",
+                            "name": "user.id",
+                            "policy": null
+                        },
+                        "description": "resource=i-0598c7d356eba48d7",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "i-0598c7d356eba48d7"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Type of an Action",
+                            "name": "action.type",
+                            "policy": null
+                        },
+                        "description": "action=StopInstances",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "stop"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Type of a resource",
+                            "name": "resource.type",
+                            "policy": null
+                        },
+                        "description": "action=StopInstances",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "virtual_machine"
+                    }
+                ],
+                "description": "(c1,c3,c5,c6,c7)2",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Service in which the Resource is contained",
+                            "name": "resource.service",
+                            "policy": null
+                        },
+                        "description": "action_service=ec2",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "compute_service"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Service in which the Resource is contained",
+                            "name": "resource.service",
+                            "policy": null
+                        },
+                        "description": "resource_service=ec2",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "compute_service"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Identifier for users in the ontology",
+                            "name": "user.id",
+                            "policy": null
+                        },
+                        "description": "resource=i-1234567890abcdef0",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "i-1234567890abcdef0"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Identifier for users in the ontology",
+                            "name": "user.id",
+                            "policy": null
+                        },
+                        "description": "resource_type=instance",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Type of an Action",
+                            "name": "action.type",
+                            "policy": null
+                        },
+                        "description": "action=StartInstances",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "start"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Type of a resource",
+                            "name": "resource.type",
+                            "policy": null
+                        },
+                        "description": "action=StartInstances",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "virtual_machine"
+                    }
+                ],
+                "description": "(c1,c3,c4,c5,c8)3",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Service in which the Resource is contained",
+                            "name": "resource.service",
+                            "policy": null
+                        },
+                        "description": "action_service=ec2",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "compute_service"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Service in which the Resource is contained",
+                            "name": "resource.service",
+                            "policy": null
+                        },
+                        "description": "resource_service=ec2",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "compute_service"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Identifier for users in the ontology",
+                            "name": "user.id",
+                            "policy": null
+                        },
+                        "description": "resource_type=instance",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Identifier for users in the ontology",
+                            "name": "user.id",
+                            "policy": null
+                        },
+                        "description": "resource=i-0598c7d356eba48d7",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "i-0598c7d356eba48d7"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Type of an Action",
+                            "name": "action.type",
+                            "policy": null
+                        },
+                        "description": "action=StartInstances",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "start"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Type of a resource",
+                            "name": "resource.type",
+                            "policy": null
+                        },
+                        "description": "action=StartInstances",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "virtual_machine"
+                    }
+                ],
+                "description": "(c1,c3,c5,c6,c8)4",
+                "enabled": true
+            },
+            {
+                "conditions": [
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Identifier for users in the ontology",
+                            "name": "user.id",
+                            "policy": null
+                        },
+                        "description": "resource=*",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "*"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Service in which the Resource is contained",
+                            "name": "resource.service",
+                            "policy": null
+                        },
+                        "description": "action_service=ec2",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "compute_service"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Service in which the Resource is contained",
+                            "name": "resource.service",
+                            "policy": null
+                        },
+                        "description": "resource_service=ec2",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "compute_service"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Identifier for users in the ontology",
+                            "name": "user.id",
+                            "policy": null
+                        },
+                        "description": "resource_type=instance",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "instance"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "ec2:ResourceTag/purpose",
+                            "policy": null
+                        },
+                        "description": "ec2:ResourceTag/purposeStringEqualstest",
+                        "operator": {
+                            "cloud_technology": "aws",
+                            "description": null,
+                            "name": "StringEquals"
+                        },
+                        "value": "test"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Type of an Action",
+                            "name": "action.type",
+                            "policy": null
+                        },
+                        "description": "action=TerminateInstances",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "delete"
+                    },
+                    {
+                        "attribute": {
+                            "cloud_technology": null,
+                            "description": "Type of a resource",
+                            "name": "resource.type",
+                            "policy": null
+                        },
+                        "description": "action=TerminateInstances",
+                        "operator": {
+                            "cloud_technology": null,
+                            "description": "equals",
+                            "name": "="
+                        },
+                        "value": "virtual_machine"
+                    }
+                ],
+                "description": "(c0,c1,c3,c5,c9,c10)5",
+                "enabled": true
+            }
+        ]
+    }
+}

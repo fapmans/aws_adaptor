@@ -1,0 +1,10 @@
+{
+    "Effect": "Allow",
+    "Principal": {role: ["admin"]}
+    "Action": [
+        "iam:GetUser",
+    ],
+    "Resource": "*"
+}
+
+"identity:get_user": "role:admin or is_admin:1 or role:VoAdmin"
